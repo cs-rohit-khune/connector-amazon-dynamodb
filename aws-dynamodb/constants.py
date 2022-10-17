@@ -4,6 +4,8 @@
   FORTINET CONFIDENTIAL & FORTINET PROPRIETARY SOURCE CODE
   Copyright end """
 
+DYNAMODB_SERVICE = "dynamodb"
+
 ATTRIBUTE_DEFINITIONS = (
     {
         'AttributeName': 'partitionKeyName',

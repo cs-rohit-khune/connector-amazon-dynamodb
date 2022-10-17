@@ -5,12 +5,12 @@
   Copyright end """
 
 from connectors.core.connector import get_logger, ConnectorError, Connector
-from .operations import operations, health_check
+from .operations import operations, check_health
 
-logger = get_logger('amazon-dynamodb')
+logger = get_logger('aws-dynamodb')
 
 
-class AmazonDynamoDB(Connector):
+class AWSDynamoDB(Connector):
     try:
         def execute(self, config, operation, params, **kwargs):
             action = operations.get(operation)
@@ -19,5 +19,5 @@ class AmazonDynamoDB(Connector):
         logger.exception('An exception occurred {}'.format(str(err)))
         raise ConnectorError(str(err))
 
-    def check_health(self, config):
-        return health_check(config)
+    def check_health(self, config=None):
+        return check_health(config)
