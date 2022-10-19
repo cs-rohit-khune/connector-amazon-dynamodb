@@ -127,8 +127,8 @@ def check_health(config):
             if _get_temp_credentials(config):
                 return True
             else:
-                logger.error("Invalid Role. Please verify is the role is associated to your instance.")
-                raise ConnectorError("Invalid Role. Please verify is the role is associated to your instance.")
+                logger.error("Invalid Role. Please verify that the role is associated with your instance.")
+                raise ConnectorError("Invalid Role. Please verify that the role is associated with your instance.")
         else:
             aws_access_key = config.get('aws_access_key')
             aws_region = config.get('aws_region')
