@@ -1479,8 +1479,8 @@
         },
         {
           "title": "Item Key",
-          "description": "Specify the key of the item that you want to delete from the table.",
-          "tooltip": "Specify the key of the item that you want to delete from the table.",
+          "description": "Specify the key of the item that you want to delete from the table. For the syntax of item key, you can refer this: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Client.delete_item",
+          "tooltip": "Specify the key of the item. For the syntax of item key, you can refer this: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Client.delete_item.",
           "type": "json",
           "name": "Key",
           "required": true,
@@ -1613,8 +1613,8 @@
         },
         {
           "title": "Item Key",
-          "description": "Specify the key of the item that you want to search from the table.",
-          "tooltip": "Specify the key of the item that you want to search from the table.",
+          "description": "Specify the key of the item that you want to search from the table. For the syntax of item key, you can refer this: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Client.get_item",
+          "tooltip": "Specify the key of the item. For the syntax of item key, you can refer this: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Client.get_item.",
           "type": "json",
           "name": "Key",
           "required": true,
