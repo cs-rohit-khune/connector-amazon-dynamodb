@@ -1,10 +1,10 @@
 {
-  "name": "amazon-dynamodb",
+  "name": "aws-dynamodb",
   "version": "1.0.0",
-  "label": "Amazon DynamoDB",
-  "description": "Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. This connector facilitates the automate operations related to manage database table, data and backup.",
+  "label": "AWS DynamoDB",
+  "description": "AWS DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. This connector facilitates the automate operations related to manage database table, data and backup.",
   "publisher": "Fortinet",
-  "cs_approved": false,
+  "cs_approved": true,
   "cs_compatible": true,
   "category": "AWS Services",
   "icon_small_name": "cyops_small.png",
@@ -20,84 +20,55 @@
         "type": "select",
         "name": "config_type",
         "tooltip": "AWS Configuration Type",
-        "description": "Type of configuration using which you will provide credentials to access AWS CloudWatch Logs and perform automated actions. You can select between Assume Role or Access Credentials. If you select Assume Role, then enter details in the following field(s): AWS Region: AWS region of your account to access the AWS CloudWatch Logs. AWS Access Key ID: ID of the AWS Access Key to access AWS services. AWS Secret Access Key: Key of the AWS Secret Access to access AWS services. AWS Instance IAM Role: ARN IAM Role of your AWS instance to access CloudWatch Log services. If you select Access Credentials, then enter details in the following field(s): AWS Region: AWS region of your account to access the AWS CloudWatch Logs. AWS Access Key ID: ID of the AWS Access Key to access AWS services. AWS Secret Access Key: Key of the AWS Secret Access to access AWS services.",
+        "description": "Type of configuration using which you will provide credentials to access AWS DynamoDB and perform automated actions. You can select between Access Credentials or AWS Instance IAM Role. If you select Access Credentials, then enter details in the following field(s): AWS Region: AWS region of your account to access the AWS CloudWatch Logs. AWS Access Key ID: ID of the AWS Access Key to access AWS services. AWS Secret Access Key: Key of the AWS Secret Access to access AWS services. If you select AWS Instance IAM Role then specify AWS Instance IAM Role Name to access AWS Services.",
         "options": [
-          "Assume Role",
-          "Access Credentials"
+          "Access Credentials",
+          "AWS Instance IAM Role"
         ],
         "onchange": {
-          "Assume Role": [
+          "AWS Instance IAM Role": [
             {
-              "title": "AWS Access Key",
-              "type": "password",
-              "name": "aws_access_key_id",
-              "required": true,
-              "visible": true,
-              "editable": true,
-              "value": "",
-              "description": "The access key for users AWS account"
-            },
-            {
-              "title": "AWS Secret Key",
-              "type": "password",
-              "name": "aws_secret_access_key",
-              "required": true,
-              "visible": true,
-              "editable": true,
-              "value": "",
-              "description": "The secret key for user's AWS account."
-            },
-            {
-              "title": "Region Name",
-              "type": "text",
-              "name": "region_name",
-              "required": true,
-              "visible": true,
-              "editable": true,
-              "value": "",
-              "description": "AWS Region to use, for example, us-west-1 or us-west-2 etc"
-            },
-            {
-              "title": "AWS Instance IAM Role",
+              "title": "AWS Instance IAM Role Name",
               "required": true,
               "editable": true,
               "visible": true,
               "type": "text",
               "name": "aws_iam_role",
-              "tooltip": "IAM Role of your AWS instance to access CloudWatch Logs services.",
-              "description": "IAM Role of your AWS instance to access CloudWatch Logs services. Ensure that the user has a trust relationship with the role with action STS Assume Role enabled"
+              "tooltip": "IAM Role Name of your AWS Instance where FortiSOAR installed, to access AWS services.",
+              "description": "IAM Role Name of your AWS Instance where FortiSOAR installed, to access AWS services."
             }
           ],
           "Access Credentials": [
             {
-              "title": "AWS Access Key",
-              "type": "password",
-              "name": "aws_access_key_id",
+              "title": "AWS Region",
               "required": true,
-              "visible": true,
               "editable": true,
-              "value": "",
-              "description": "The access key for users AWS account"
+              "visible": true,
+              "type": "text",
+              "name": "aws_region",
+              "placeholder": "e.g. us-east-2",
+              "tooltip": "AWS region of your account to access the AWS DynamoDB",
+              "description": "AWS region of your account to access the AWS DynamoDB"
             },
             {
-              "title": "AWS Secret Key",
+              "title": "AWS Access Key ID",
+              "required": true,
+              "editable": true,
+              "visible": true,
+              "type": "text",
+              "name": "aws_access_key",
+              "tooltip": "ID of the AWS Access Key to access AWS services",
+              "description": "ID of the AWS Access Key to access AWS services"
+            },
+            {
+              "title": "AWS Secret Access Key",
+              "required": true,
+              "editable": true,
+              "visible": true,
               "type": "password",
               "name": "aws_secret_access_key",
-              "required": true,
-              "visible": true,
-              "editable": true,
-              "value": "",
-              "description": "The secret key for user's AWS account."
-            },
-            {
-              "title": "Region Name",
-              "type": "text",
-              "name": "region_name",
-              "required": true,
-              "visible": true,
-              "editable": true,
-              "value": "",
-              "description": "AWS Region to use, for example, us-west-1 or us-west-2 etc"
+              "tooltip": "Key of the AWS Secret Access to access AWS services",
+              "description": "Key of the AWS Secret Access to access AWS services"
             }
           ]
         }
@@ -108,35 +79,80 @@
     {
       "title": "Create Table",
       "operation": "create_table",
-      "description": "Adds a new table in Amazon DynamoDB",
+      "description": "Create a new table in AWS DynamoDB with the specified table name.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
         {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        },
+        {
           "title": "Table Name",
-          "description": "The name of the table to be created.",
+          "description": "Specify the table name that you want create in AWS DynamoDB.A table name should be between 3 and 255 characters, containing only letters, numbers, underscores (_), hyphens (-), and periods (.).",
           "tooltip": "A table name should be between 3 and 255 characters, containing only letters, numbers, underscores (_), hyphens (-), and periods (.)",
           "type": "text",
           "name": "TableName",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         },
         {
           "title": "Partition Key Name",
-          "description": "The partition key is part of the table's primary key. It is a hash value that is used to retrieve items from your table and allocate data across hosts for scalability and availability.",
+          "description": "Specify the partition key is part of the table's primary key. It is a hash value that is used to retrieve items from your table and allocate data across hosts for scalability and availability.",
           "tooltip": "A name of the partition key. 1 to 255 characters and case sensitive.",
           "type": "text",
           "name": "partitionKeyName",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         },
         {
           "title": "Partition Key Data Type",
-          "description": "The data type for the partition key",
+          "description": "Specify the data type for the partition key",
           "tooltip": "The data type for the partition key",
           "type": "select",
           "name": "partitionKeyDataType",
@@ -147,12 +163,11 @@
           ],
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         },
         {
           "title": "Sort Key (Optional)",
-          "description": "The sort key is second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key.",
+          "description": "Specify the sort key is second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key.",
           "tooltip": "The sort key allows you to sort or search among all items sharing the same partition key.",
           "type": "checkbox",
           "name": "sortKey",
@@ -170,8 +185,7 @@
                 "name": "sortKeyName",
                 "required": true,
                 "visible": true,
-                "editable": true,
-                "value": ""
+                "editable": true
               },
               {
                 "title": "Sort Key Data Type",
@@ -186,16 +200,15 @@
                 ],
                 "required": true,
                 "visible": true,
-                "editable": true,
-                "value": ""
+                "editable": true
               }
             ]
           }
         },
         {
           "title": "Billing Mode",
-          "description": "This controls how you are charged for read and write throughput and how you manage capacity",
-          "tooltip": "Select 'Provisioned' mode for predictable workloads or Select 'On Demand' for unpredictable workloads",
+          "description": "Specify this controls how you are charged for read and write throughput and how you manage capacity.",
+          "tooltip": "Select 'Provisioned' mode for predictable workloads or Select 'On Demand' for unpredictable workloads.",
           "type": "select",
           "name": "billingMode",
           "options": [
@@ -205,13 +218,12 @@
           "required": true,
           "visible": true,
           "editable": true,
-          "value": "",
           "onchange": {
             "Provisioned": [
               {
                 "title": "Read Capacity",
-                "description": "The maximum number of strongly consistent reads consumed per second",
-                "tooltip": "The maximum number of strongly consistent reads consumed per second",
+                "description": "Specify the maximum number of strongly consistent reads consumed per second in the table.",
+                "tooltip": "The maximum number of strongly consistent reads consumed per second in the table.",
                 "type": "integer",
                 "name": "readCapacityUnits",
                 "required": true,
@@ -221,8 +233,8 @@
               },
               {
                 "title": "Write Capacity",
-                "description": "The maximum number of writes consumed per second",
-                "tooltip": "The maximum number of writes consumed per second",
+                "description": "Specify the maximum number of writes consumed per second in the table.",
+                "tooltip": "The maximum number of writes consumed per second in the table.",
                 "type": "integer",
                 "name": "writeCapacityUnits",
                 "required": true,
@@ -277,9 +289,7 @@
               ],
               "Projection": {
                 "ProjectionType": "",
-                "NonKeyAttributes": [
-                  ""
-                ]
+                "NonKeyAttributes": []
               },
               "IndexSizeBytes": "",
               "ItemCount": "",
@@ -297,9 +307,7 @@
               ],
               "Projection": {
                 "ProjectionType": "",
-                "NonKeyAttributes": [
-                  ""
-                ]
+                "NonKeyAttributes": []
               },
               "IndexStatus": "",
               "Backfilling": "",
@@ -366,20 +374,66 @@
     {
       "title": "Delete Table",
       "operation": "delete_table",
-      "description": "Deletes an existing table from Amazon DynamoDB",
+      "description": "Delete an existing table from AWS DynamoDB",
       "category": "utilities",
       "enabled": true,
       "parameters": [
         {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        },
+        {
           "title": "Table Name",
-          "description": "The name of the table to be deleted",
+          "description": "Specify the table name that you want to delete from AWS DynamoDB.",
           "tooltip": "The name of the table to be deleted",
           "type": "text",
           "name": "TableName",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         }
       ],
       "output_schema": {
@@ -425,9 +479,7 @@
               ],
               "Projection": {
                 "ProjectionType": "",
-                "NonKeyAttributes": [
-                  ""
-                ]
+                "NonKeyAttributes": []
               },
               "IndexSizeBytes": "",
               "ItemCount": "",
@@ -445,9 +497,7 @@
               ],
               "Projection": {
                 "ProjectionType": "",
-                "NonKeyAttributes": [
-                  ""
-                ]
+                "NonKeyAttributes": []
               },
               "IndexStatus": "",
               "Backfilling": "",
@@ -514,25 +564,71 @@
     {
       "title": "Update Table",
       "operation": "update_table",
-      "description": "Updated an existing table",
+      "description": "Updated an existing table of AWS DynamoDB.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
         {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        },
+        {
           "title": "Table Name",
-          "description": "The name of the table to be updated.",
+          "description": "Specify the table name that you want to update.",
           "tooltip": "The name of the table to be updated.",
           "type": "text",
           "name": "TableName",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         },
         {
           "title": "Operation",
-          "description": "Select operation to be performed on the table",
-          "tooltip": "Select operation to be performed on the table",
+          "description": "Select the operation to be performed on the specified table.",
+          "tooltip": "Select operation to be performed on the table.",
           "type": "select",
           "name": "updateOperation",
           "options": [
@@ -545,13 +641,12 @@
           "required": true,
           "visible": true,
           "editable": true,
-          "value": "",
           "onchange": {
             "Modify Provisioned Throughput": [
               {
                 "title": "Billing Mode",
-                "description": "The partition key is part of the table's primary key. It is a hash value that is used to retrieve items from your table and allocate data across hosts for scalability and availability.",
-                "tooltip": "The partition key is part of the table's primary key.",
+                "description": "Specify this controls how you are charged for read and write throughput and how you manage capacity.",
+                "tooltip": "Select 'Provisioned' mode for predictable workloads or Select 'On Demand' for unpredictable workloads.",
                 "type": "select",
                 "name": "billingMode",
                 "options": [
@@ -561,12 +656,11 @@
                 "required": true,
                 "visible": true,
                 "editable": true,
-                "value": "",
                 "onchange": {
                   "Provisioned": [
                     {
                       "title": "Read Capacity",
-                      "description": "The maximum number of strongly consistent reads consumed per second",
+                      "description": "Specify the maximum number of strongly consistent reads consumed per second in the table.",
                       "tooltip": "The maximum number of strongly consistent reads consumed per second",
                       "type": "integer",
                       "name": "readCapacityUnits",
@@ -577,7 +671,7 @@
                     },
                     {
                       "title": "Write Capacity",
-                      "description": "The maximum number of writes consumed per second",
+                      "description": "Specify the maximum number of writes consumed per second in the table.",
                       "tooltip": "The maximum number of writes consumed per second",
                       "type": "integer",
                       "name": "writeCapacityUnits",
@@ -621,8 +715,7 @@
                       ],
                       "required": false,
                       "visible": true,
-                      "editable": true,
-                      "value": ""
+                      "editable": true
                     }
                   ]
                 }
@@ -637,8 +730,7 @@
                 "name": "indexName",
                 "required": true,
                 "visible": true,
-                "editable": true,
-                "value": ""
+                "editable": true
               },
               {
                 "title": "Partition Key Name",
@@ -648,8 +740,7 @@
                 "name": "partitionKeyName",
                 "required": true,
                 "visible": true,
-                "editable": true,
-                "value": ""
+                "editable": true
               },
               {
                 "title": "Partition Key Data Type",
@@ -664,8 +755,7 @@
                 ],
                 "required": true,
                 "visible": true,
-                "editable": true,
-                "value": ""
+                "editable": true
               },
               {
                 "title": "Sort Key (Optional)",
@@ -687,8 +777,7 @@
                       "name": "sortKeyName",
                       "required": true,
                       "visible": true,
-                      "editable": true,
-                      "value": ""
+                      "editable": true
                     },
                     {
                       "title": "Sort Key Data Type",
@@ -703,8 +792,7 @@
                       ],
                       "required": true,
                       "visible": true,
-                      "editable": true,
-                      "value": ""
+                      "editable": true
                     }
                   ]
                 }
@@ -740,7 +828,6 @@
                 "required": true,
                 "visible": true,
                 "editable": true,
-                "value": "",
                 "options": [
                   "All",
                   "Only Keys",
@@ -756,8 +843,7 @@
                       "name": "nonKeyAttributes",
                       "required": true,
                       "visible": true,
-                      "editable": true,
-                      "value": ""
+                      "editable": true
                     }
                   ]
                 }
@@ -772,8 +858,7 @@
                 "name": "indexName",
                 "required": true,
                 "visible": true,
-                "editable": true,
-                "value": ""
+                "editable": true
               },
               {
                 "title": "Read Capacity",
@@ -807,8 +892,7 @@
                 "name": "indexName",
                 "required": true,
                 "visible": true,
-                "editable": true,
-                "value": ""
+                "editable": true
               }
             ]
           }
@@ -950,29 +1034,126 @@
     {
       "title": "Get Table List",
       "operation": "get_table_list",
-      "description": "Get list of an existing table from Amazon DynamoDB",
-      "category": "utilities",
-      "enabled": true,
-      "parameters": [],
-      "output_schema": {}
-    },
-    {
-      "title": "Get Table Details",
-      "operation": "get_table_details",
-      "description": "Describe information about specified table from Amazon DynamoDB",
+      "description": "Retrieves list of existing tables from AWS DynamoDB",
       "category": "utilities",
       "enabled": true,
       "parameters": [
         {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        }
+      ],
+      "output_schema": {
+        "TableNames": [],
+        "LastEvaluatedTableName": ""
+      }
+    },
+    {
+      "title": "Get Table Details",
+      "operation": "get_table_details",
+      "description": "Retrieve information about specified table from AWS DynamoDB",
+      "category": "utilities",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        },
+        {
           "title": "Table Name",
-          "description": "The name of the table to describe.",
+          "description": "Specify the table name whose information you want to retrieve from AWS DynamoDB.",
           "tooltip": "The name of the table to describe.",
           "type": "text",
           "name": "TableName",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         }
       ],
       "output_schema": {
@@ -1036,8 +1217,7 @@
               ],
               "Projection": {
                 "ProjectionType": "",
-                "NonKeyAttributes": [
-                ]
+                "NonKeyAttributes": []
               },
               "IndexStatus": "",
               "Backfilling": "",
@@ -1112,122 +1292,76 @@
     {
       "title": "Add Item",
       "operation": "add_item",
-      "description": "Adds a new item in table",
+      "description": "Add a new item in the specified table.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
         {
-          "title": "Table Name",
-          "description": "The name of the table to contain the item.",
-          "tooltip": "The name of the table to contain the item.",
-          "type": "text",
-          "name": "TableName",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "value": ""
-        },
-        {
-          "title": "Partition Key Name",
-          "description": "A name of the partition key.",
-          "tooltip": "Provide a name for the partition key",
-          "type": "text",
-          "name": "partitionKeyName",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "value": ""
-        },
-        {
-          "title": "Partition Key Data Type",
-          "description": "The data type for the partition key value",
-          "tooltip": "The data type for the partition key value",
-          "type": "select",
-          "name": "partitionKeyDataType",
-          "options": [
-            "String",
-            "Binary",
-            "Number"
-          ],
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "value": ""
-        },
-        {
-          "title": "Partition Key Value",
-          "description": "A value of the partition key.",
-          "tooltip": "Provide a value for the partition key",
-          "type": "text",
-          "name": "partitionKeyValue",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "value": ""
-        },
-        {
-          "title": "Sort Key",
-          "description": "Provide a value for the sort key.",
-          "tooltip": "For a composite primary key, you must provide values for both the partition key and the sort key.",
+          "title": "Assume a Role",
           "type": "checkbox",
-          "name": "sortKey",
+          "name": "assume_role",
           "required": false,
-          "visible": true,
           "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
           "value": false,
           "onchange": {
             "true": [
               {
-                "title": "Sort Key Name",
-                "description": "A name of the sort key.",
-                "tooltip": "A name of the sort key.",
-                "type": "text",
-                "name": "sortKeyName",
+                "title": "AWS Region",
                 "required": true,
-                "visible": true,
                 "editable": true,
-                "value": ""
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
               },
               {
-                "title": "Sort Key Data Type",
-                "description": "The data type for the sort key value",
-                "tooltip": "The data type for the sort key value",
-                "type": "select",
-                "name": "sortKeyDataType",
-                "options": [
-                  "String",
-                  "Binary",
-                  "Number"
-                ],
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
                 "required": true,
-                "visible": true,
                 "editable": true,
-                "value": ""
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
               },
               {
-                "title": "Sort Key Value",
-                "description": "A value of the sort key.",
-                "tooltip": "A value of the sort key.",
+                "title": "Session Name",
                 "type": "text",
-                "name": "sortKeyValue",
+                "name": "session_name",
                 "required": true,
-                "visible": true,
                 "editable": true,
-                "value": ""
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
               }
             ]
           }
         },
         {
-          "title": "Additional Attributes",
-          "description": "Add additional attributes other than primary key attributes.",
-          "tooltip": "Provide data in json format: { 'AttributeName': {'S': 'Value'}, 'AttributeName': { 'N': 'Value'} }. \nWhere 'S'=String, 'N'=Number, 'B'=Binary, 'SS'=StringSet, 'NS'=NumberSet, 'BS'=BinarySet, 'M'=Dictionary, 'L'=List, 'NULL'=boolean, 'BOOL'=boolean",
-          "type": "json",
-          "name": "additionalAttributes",
-          "required": false,
+          "title": "Table Name",
+          "description": "Specify the name of the table to contain the item.",
+          "tooltip": "The name of the table to contain the item.",
+          "type": "text",
+          "name": "TableName",
+          "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
+        },
+        {
+          "title": "Item",
+          "description": "Specify the item that you want to add into the specified table.",
+          "tooltip": "Specify the item that you want to add into the specified table.",
+          "type": "json",
+          "name": "Item",
+          "required": true,
+          "visible": true,
+          "editable": true
         }
       ],
       "output_schema": {
@@ -1292,122 +1426,66 @@
     {
       "title": "Delete Item",
       "operation": "delete_item",
-      "description": "Deleted an item in specified table",
+      "description": "Delete an item from specified AWS DynamoDB table.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
         {
-          "title": "Table Name",
-          "description": "The name of the table from which to delete the item.",
-          "tooltip": "The name of the table from which to delete the item.",
-          "type": "text",
-          "name": "TableName",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "value": ""
-        },
-        {
-          "title": "Partition Key Name",
-          "description": "A name of the partition key.",
-          "tooltip": "Provide a name for the partition key",
-          "type": "text",
-          "name": "partitionKeyName",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "value": ""
-        },
-        {
-          "title": "Partition Key Data Type",
-          "description": "The data type for the partition key value",
-          "tooltip": "The data type for the partition key value",
-          "type": "select",
-          "name": "partitionKeyDataType",
-          "options": [
-            "String",
-            "Binary",
-            "Number"
-          ],
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "value": ""
-        },
-        {
-          "title": "Partition Key Value",
-          "description": "A value of the partition key.",
-          "tooltip": "Provide a value for the partition key",
-          "type": "text",
-          "name": "partitionKeyValue",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "value": ""
-        },
-        {
-          "title": "Sort Key",
-          "description": "Provide a value for the sort key.",
-          "tooltip": "For a composite primary key, you must provide values for both the partition key and the sort key.",
+          "title": "Assume a Role",
           "type": "checkbox",
-          "name": "sortKey",
+          "name": "assume_role",
           "required": false,
-          "visible": true,
           "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
           "value": false,
           "onchange": {
             "true": [
               {
-                "title": "Sort Key Name",
-                "description": "A name of the sort key.",
-                "tooltip": "A name of the sort key.",
-                "type": "text",
-                "name": "sortKeyName",
+                "title": "AWS Region",
                 "required": true,
-                "visible": true,
                 "editable": true,
-                "value": ""
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
               },
               {
-                "title": "Sort Key Data Type",
-                "description": "The data type for the sort key value",
-                "tooltip": "The data type for the sort key value",
-                "type": "select",
-                "name": "sortKeyDataType",
-                "options": [
-                  "String",
-                  "Binary",
-                  "Number"
-                ],
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
                 "required": true,
-                "visible": true,
                 "editable": true,
-                "value": ""
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
               },
               {
-                "title": "Sort Key Value",
-                "description": "A value of the sort key.",
-                "tooltip": "A value of the sort key.",
+                "title": "Session Name",
                 "type": "text",
-                "name": "sortKeyValue",
+                "name": "session_name",
                 "required": true,
-                "visible": true,
                 "editable": true,
-                "value": ""
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
               }
             ]
           }
         },
         {
-          "title": "Additional Attributes",
-          "description": "Add additional attributes other than primary key attributes.",
-          "tooltip": "Provide data in json format: { 'AttributeName': {'S': 'Value'}, 'AttributeName': { 'N': 'Value'} }. \nWhere 'S'=String, 'N'=Number, 'B'=Binary, 'SS'=StringSet, 'NS'=NumberSet, 'BS'=BinarySet, 'M'=Dictionary, 'L'=List, 'NULL'=boolean, 'BOOL'=boolean",
+          "title": "Item Key",
+          "description": "Specify the key of the item that you want to delete from the table. For the syntax of item key, you can refer this: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Client.delete_item",
+          "tooltip": "Specify the key of the item. For the syntax of item key, you can refer this: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Client.delete_item.",
           "type": "json",
-          "name": "additionalAttributes",
-          "required": false,
+          "name": "Key",
+          "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         }
       ],
       "output_schema": {
@@ -1472,111 +1550,76 @@
     {
       "title": "Search Item",
       "operation": "search_item",
-      "description": "Searches an item in specified table.",
+      "description": "Search items in the specified table.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
         {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        },
+        {
           "title": "Table Name",
-          "description": "The name of the table containing the requested item.",
+          "description": "Specify the table name in which you want search the item.",
           "tooltip": "The name of the table containing the requested item.",
           "type": "text",
           "name": "TableName",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         },
         {
-          "title": "Partition Key Name",
-          "description": "A name of the partition key.",
-          "tooltip": "Provide a name for the partition key",
-          "type": "text",
-          "name": "partitionKeyName",
+          "title": "Item Key",
+          "description": "Specify the key of the item that you want to search from the table. For the syntax of item key, you can refer this: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Client.get_item",
+          "tooltip": "Specify the key of the item. For the syntax of item key, you can refer this: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Client.get_item.",
+          "type": "json",
+          "name": "Key",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
-        },
-        {
-          "title": "Partition Key Data Type",
-          "description": "The data type for the partition key value",
-          "tooltip": "The data type for the partition key value",
-          "type": "select",
-          "name": "partitionKeyDataType",
-          "options": [
-            "String",
-            "Binary",
-            "Number"
-          ],
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "value": ""
-        },
-        {
-          "title": "Partition Key Value",
-          "description": "A value of the partition key.",
-          "tooltip": "Provide a value for the partition key",
-          "type": "text",
-          "name": "partitionKeyValue",
-          "required": true,
-          "visible": true,
-          "editable": true,
-          "value": ""
-        },
-        {
-          "title": "Sort Key",
-          "description": "Provide a value for the sort key.",
-          "tooltip": "For a composite primary key, you must provide values for both the partition key and the sort key.",
-          "type": "checkbox",
-          "name": "sortKey",
-          "required": false,
-          "visible": true,
-          "editable": true,
-          "value": false,
-          "onchange": {
-            "true": [
-              {
-                "title": "Sort Key Name",
-                "description": "A name of the sort key.",
-                "tooltip": "A name of the sort key.",
-                "type": "text",
-                "name": "sortKeyName",
-                "required": true,
-                "visible": true,
-                "editable": true,
-                "value": ""
-              },
-              {
-                "title": "Sort Key Data Type",
-                "description": "The data type for the sort key value",
-                "tooltip": "The data type for the sort key value",
-                "type": "select",
-                "name": "sortKeyDataType",
-                "options": [
-                  "String",
-                  "Binary",
-                  "Number"
-                ],
-                "required": true,
-                "visible": true,
-                "editable": true,
-                "value": ""
-              },
-              {
-                "title": "Sort Key Value",
-                "description": "A value of the sort key.",
-                "tooltip": "A value of the sort key.",
-                "type": "text",
-                "name": "sortKeyValue",
-                "required": true,
-                "visible": true,
-                "editable": true,
-                "value": ""
-              }
-            ]
-          }
+          "editable": true
         }
       ],
       "output_schema": {
@@ -1646,26 +1689,71 @@
       "enabled": true,
       "parameters": [
         {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        },
+        {
           "title": "Global Table Name",
-          "description": "The global table name to be created.",
-          "tooltip": "The global table name to be created.",
+          "description": "Specify the global table name that to be created.",
+          "tooltip": "The global table name that to be created.",
           "type": "text",
           "name": "globalTableName",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         },
         {
           "title": "Region Name",
-          "description": "The Region where the global table needs to be created.",
+          "description": "Specify the region where the global table needs to be created.",
           "tooltip": "Region where the global table needs to be created.",
           "type": "text",
           "name": "regionName",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         }
       ],
       "output_schema": {
@@ -1703,22 +1791,68 @@
       }
     },
     {
-      "title": "Describe Global Table",
-      "operation": "describe_global_table",
-      "description": "Returns information about the specified global table.",
+      "title": "Get Global Table Details",
+      "operation": "get_global_table_details",
+      "description": "Retrieve the information about the specified global table.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
         {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        },
+        {
           "title": "Global Table Name",
-          "description": "The name of the global table.",
+          "description": "Specify the global table name whose information you want to fetch from AWS DynamoDB.",
           "tooltip": "The name of the global table.",
           "type": "text",
           "name": "globalTableName",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         }
       ],
       "output_schema": {
@@ -1758,10 +1892,58 @@
     {
       "title": "Get Global Table List",
       "operation": "get_global_table_list",
-      "description": "Lists all global tables that have a replica in the specified Region.",
+      "description": "Retrieves list of all the global tables that have a replica in the specified Region.",
       "category": "utilities",
       "enabled": true,
-      "parameters": [],
+      "parameters": [
+        {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        }
+      ],
       "output_schema": {
         "GlobalTables": [
           {
@@ -1784,26 +1966,71 @@
       "enabled": true,
       "parameters": [
         {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        },
+        {
           "title": "Table Name",
-          "description": "The name of the table to be backup",
-          "tooltip": "The name of the table to be backup",
+          "description": "Specify the table name whose backup you want to create in AWS DynamoDB.",
+          "tooltip": "The name of the table to be backup.",
           "type": "text",
           "name": "TableName",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         },
         {
           "title": "Backup Name",
-          "description": "Specified name for the backup.",
-          "tooltip": "Specified name for the backup.",
+          "description": "Specify the name for the backup table.",
+          "tooltip": "Specify the name for the backup table.",
           "type": "text",
           "name": "BackupName",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         }
       ],
       "output_schema": {
@@ -1819,22 +2046,68 @@
       }
     },
     {
-      "title": "Describe Table Backup",
-      "operation": "describe_table_backup",
-      "description": "Describes an existing backup of a table.",
+      "title": "Get Table Backup Details",
+      "operation": "get_table_backup_details",
+      "description": "Retrieve the details of an existing backup of a table.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
         {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        },
+        {
           "title": "Backup ARN",
-          "description": "The Amazon Resource Name (ARN) associated with the backup.",
+          "description": "Specify the Amazon Resource Name (ARN) associated with the backup.",
           "tooltip": "The Amazon Resource Name (ARN) associated with the backup.",
           "type": "text",
           "name": "BackupArn",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         }
       ],
       "output_schema": {
@@ -1879,8 +2152,7 @@
                 ],
                 "Projection": {
                   "ProjectionType": "",
-                  "NonKeyAttributes": [
-                  ]
+                  "NonKeyAttributes": []
                 }
               }
             ],
@@ -1895,8 +2167,7 @@
                 ],
                 "Projection": {
                   "ProjectionType": "",
-                  "NonKeyAttributes": [
-                  ]
+                  "NonKeyAttributes": []
                 },
                 "ProvisionedThroughput": {
                   "ReadCapacityUnits": "",
@@ -1923,22 +2194,139 @@
       }
     },
     {
-      "title": "Delete Table Backup",
-      "operation": "delete_table_backup",
-      "description": "Deletes an existing backup of a table.",
+      "title": "Get Table Backup List",
+      "operation": "get_table_backup_list",
+      "description": "Retrieves list of backups from AWS DynamoDB.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
         {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        }
+      ],
+      "output_schema": {
+        "BackupSummaries": [
+          {
+            "TableName": "",
+            "TableId": "",
+            "TableArn": "",
+            "BackupArn": "",
+            "BackupName": "",
+            "BackupCreationDateTime": "",
+            "BackupStatus": "",
+            "BackupType": "",
+            "BackupSizeBytes": ""
+          }
+        ]
+      }
+    },
+    {
+      "title": "Delete Table Backup",
+      "operation": "delete_table_backup",
+      "description": "Deletes an existing backup of a table from AWS DynamoDB.",
+      "category": "utilities",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        },
+        {
           "title": "Backup ARN",
-          "description": "The Amazon Resource Name (ARN) associated with the backup.",
+          "description": "Specify the Amazon Resource Name (ARN) associated with the backup.",
           "tooltip": "The Amazon Resource Name (ARN) associated with the backup.",
           "type": "text",
           "name": "BackupArn",
           "required": true,
           "visible": true,
-          "editable": true,
-          "value": ""
+          "editable": true
         }
       ],
       "output_schema": {
@@ -1983,8 +2371,7 @@
                 ],
                 "Projection": {
                   "ProjectionType": "",
-                  "NonKeyAttributes": [
-                  ]
+                  "NonKeyAttributes": []
                 }
               }
             ],
@@ -1999,8 +2386,7 @@
                 ],
                 "Projection": {
                   "ProjectionType": "",
-                  "NonKeyAttributes": [
-                  ]
+                  "NonKeyAttributes": []
                 },
                 "ProvisionedThroughput": {
                   "ReadCapacityUnits": "",
