@@ -10,115 +10,195 @@ from .utils import _get_temp_credentials
 logger = get_logger('aws-dynamodb')
 
 
+def remove_unwanted_param(params):
+    try:
+        params.pop('aws_region', None)
+        params.pop('assume_role', None)
+        params.pop('session_name', None)
+        params.pop('role_arn', None)
+        param_dict = {k: v for k, v in params.items() if v is not None and v != '' and v != {} and v != []}
+        return param_dict
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
+
+
 def create_table(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    payload = build_create_table_payload(params)
-    response = client.create_table(**payload)
-    response.pop('ResponseMetadata')
-    return response
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        payload = build_create_table_payload(params)
+        response = client.create_table(**payload)
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
 
 
 def delete_table(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    response = client.delete_table(**params)
-    response.pop('ResponseMetadata')
-    return response
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        payload = remove_unwanted_param(params)
+        response = client.delete_table(**payload)
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
 
 
 def update_table(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    payload = build_update_table_payload(params)
-    response = client.update_table(**payload)
-    response.pop('ResponseMetadata')
-    return response
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        payload = build_update_table_payload(params)
+        response = client.update_table(**payload)
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
 
 
 def get_table_list(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    response = client.list_tables()
-    response.pop("ResponseMetadata")
-    return response
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        response = client.list_tables()
+        response.pop("ResponseMetadata")
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
 
 
 def get_table_details(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    response = client.describe_table(**params)
-    response.pop('ResponseMetadata')
-    return response
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        payload = remove_unwanted_param(params)
+        response = client.describe_table(**payload)
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
 
 
 def add_item(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    params["ReturnValues"] = "ALL_OLD"
-    response = client.put_item(**params)
-    response.pop('ResponseMetadata')
-    return response
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        payload = build_add_item_payload(params)
+        response = client.put_item(**payload)
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
 
 
 def delete_item(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    params["ReturnValues"] = "ALL_OLD"
-    response = client.delete_item(**params)
-    response.pop('ResponseMetadata')
-    return response
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        payload = build_delete_or_search_item_payload(params)
+        response = client.delete_item(**payload)
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
 
 
 def search_item(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    response = client.get_item(**params)
-    response.pop('ResponseMetadata')
-    return response
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        payload = build_delete_or_search_item_payload(params)
+        response = client.get_item(**payload)
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
 
 
 def create_global_table(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    payload = build_create_global_table_payload(params)
-    response = client.create_global_table(**payload)
-    response.pop('ResponseMetadata')
-    return response
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        payload = build_create_global_table_payload(params)
+        response = client.create_global_table(**payload)
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
 
 
 def get_global_table_details(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    response = client.describe_global_table(GlobalTableName=params.get('globalTableName'))
-    response.pop('ResponseMetadata')
-    return response
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        response = client.describe_global_table(GlobalTableName=params.get('globalTableName'))
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
 
 
 def get_global_table_list(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    response = client.list_global_tables()
-    response.pop('ResponseMetadata')
-    return response
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        response = client.list_global_tables()
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
 
 
 def create_backup(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    response = client.create_backup(**params)
-    response.pop('ResponseMetadata')
-    return response
-
-
-def get_table_backup_list(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    response = client.list_backups(**params)
-    response.pop('ResponseMetadata')
-    return response
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        payload = remove_unwanted_param(params)
+        response = client.create_backup(**payload)
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
 
 
 def get_table_backup_details(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    response = client.describe_backup(**params)
-    response.pop('ResponseMetadata')
-    return response
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        payload = remove_unwanted_param(params)
+        response = client.describe_backup(**payload)
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
+
+
+def get_table_backup_list(config, params):
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        payload = remove_unwanted_param(params)
+        response = client.list_backups(**payload)
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
 
 
 def delete_table_backup(config, params):
-    client = get_aws_client(config, params, DYNAMODB_SERVICE)
-    response = client.delete_backup(**params)
-    response.pop('ResponseMetadata')
-    return response
-
+    try:
+        client = get_aws_client(config, params, DYNAMODB_SERVICE)
+        payload = remove_unwanted_param(params)
+        response = client.delete_backup(**payload)
+        response.pop('ResponseMetadata')
+        return response
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
+        
 
 def check_health(config):
     try:
@@ -157,6 +237,7 @@ operations = {
     'get_global_table_details': get_global_table_details,
     'get_global_table_list': get_global_table_list,
     'create_backup': create_backup,
+    'get_table_backup_list': get_table_backup_list,
     'get_table_backup_details': get_table_backup_details,
     'delete_table_backup': delete_table_backup
 }

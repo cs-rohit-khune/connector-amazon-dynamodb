@@ -43,7 +43,7 @@ def _get_temp_credentials(config):
 
 def _assume_a_role(data, params, aws_region):
     try:
-        client = boto3.client(DYNAMODB_SERVICE, region_name=aws_region, aws_access_key_id=data.get('AccessKeyId'),
+        client = boto3.client('sts', region_name=aws_region, aws_access_key_id=data.get('AccessKeyId'),
                               aws_secret_access_key=data.get('SecretAccessKey'),
                               aws_session_token=data.get('Token'))
         role_arn = params.get('role_arn')
@@ -156,7 +156,7 @@ def _get_billing_mode_attribute(params):
         billing_mode['BillingMode'] = _get_attribute_mapping(params.get('billingMode'), BILL_MODE_MAPPING)
     return billing_mode
 
-
+    
 def _get_db_stream_attribute(params):
     db_stream = {}
     if params.get('streamEnabled') == 'Enable':
@@ -196,7 +196,6 @@ def build_create_table_payload(params):
     payload.update(_get_attribute_definition(params))
     payload.update(_get_key_schema(params))
     payload.update(_get_billing_mode_attribute(params))
-
     return payload
 
 
@@ -223,12 +222,11 @@ def build_update_table_payload(params):
 
 
 def build_add_item_payload(params):
-    payload = {'TableName': params.get('TableName'), 'Item': {}}
+    payload = {'TableName': params.get('TableName'), 'Item': {}, 'ReturnValues': 'ALL_OLD'}
     payload['Item'].update(
         {
             params.get('partitionKeyName'): {
-                _get_attribute_mapping(params.get('partitionKeyDataType'), DATA_TYPE_MAPPING): str(
-                    params.get('partitionKeyValue'))
+                _get_attribute_mapping(params.get('partitionKeyDataType'), DATA_TYPE_MAPPING): str(params.get('partitionKeyValue'))
             }
         }
     )
@@ -236,8 +234,7 @@ def build_add_item_payload(params):
         payload['Item'].update(
             {
                 params.get('sortKeyName'): {
-                    _get_attribute_mapping(params.get('sortKeyDataType'), DATA_TYPE_MAPPING): str(
-                        params.get('sortKeyValue'))
+                    _get_attribute_mapping(params.get('sortKeyDataType'), DATA_TYPE_MAPPING): str(params.get('sortKeyValue'))
                 }
             }
         )
@@ -247,14 +244,10 @@ def build_add_item_payload(params):
 
 
 def build_delete_or_search_item_payload(params):
-    payload = {'TableName': params.get('TableName'), 'Key': {}}
-    payload['Key'].update({params.get('partitionKeyName'): {
-        _get_attribute_mapping(params.get('partitionKeyDataType'), DATA_TYPE_MAPPING): str(
-            params.get('partitionKeyValue'))}})
+    payload = {'TableName': params.get('TableName'), 'Key': {}, 'ReturnValues': 'ALL_OLD'}
+    payload['Key'].update({params.get('partitionKeyName'): {_get_attribute_mapping(params.get('partitionKeyDataType'), DATA_TYPE_MAPPING): str(params.get('partitionKeyValue'))}})
     if params.get('sortKey'):
-        payload['Key'].update({params.get('sortKeyName'): {
-            _get_attribute_mapping(params.get('sortKeyDataType'), DATA_TYPE_MAPPING): str(
-                params.get('sortKeyValue'))}})
+        payload['Key'].update({params.get('sortKeyName'): {_get_attribute_mapping(params.get('sortKeyDataType'), DATA_TYPE_MAPPING): str(params.get('sortKeyValue'))}})
     if params.get('additionalAttributes'):
         payload['Key'].update(params.get('additionalAttributes'))
     return payload
