@@ -72,6 +72,16 @@
             }
           ]
         }
+      },
+      {
+        "title": "Verify SSL",
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set as True.",
+        "required": false,
+        "editable": true,
+        "visible": true,
+        "type": "checkbox",
+        "name": "verify_ssl",
+        "value": true
       }
     ]
   },
@@ -133,7 +143,7 @@
         {
           "title": "Table Name",
           "description": "Specify the table name that you want create in AWS DynamoDB.A table name should be between 3 and 255 characters, containing only letters, numbers, underscores (_), hyphens (-), and periods (.).",
-          "tooltip": "A table name should be between 3 and 255 characters, containing only letters, numbers, underscores (_), hyphens (-), and periods (.)",
+          "tooltip": "Specify the table name. A table name should be between 3 and 255 characters, containing only letters, numbers, underscores (_), hyphens (-), and periods (.)",
           "type": "text",
           "name": "TableName",
           "required": true,
@@ -143,7 +153,7 @@
         {
           "title": "Partition Key Name",
           "description": "Specify the partition key is part of the table's primary key. It is a hash value that is used to retrieve items from your table and allocate data across hosts for scalability and availability.",
-          "tooltip": "A name of the partition key. 1 to 255 characters and case sensitive.",
+          "tooltip": "Specify the name of the partition key. 1 to 255 characters and case sensitive.",
           "type": "text",
           "name": "partitionKeyName",
           "required": true,
@@ -153,7 +163,7 @@
         {
           "title": "Partition Key Data Type",
           "description": "Specify the data type for the partition key",
-          "tooltip": "The data type for the partition key",
+          "tooltip": "Specify the data type for the partition key",
           "type": "select",
           "name": "partitionKeyDataType",
           "options": [
@@ -168,7 +178,7 @@
         {
           "title": "Sort Key (Optional)",
           "description": "Specify the sort key is second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key.",
-          "tooltip": "The sort key allows you to sort or search among all items sharing the same partition key.",
+          "tooltip": "Specify the sort key is second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key.",
           "type": "checkbox",
           "name": "sortKey",
           "required": false,
@@ -180,7 +190,7 @@
               {
                 "title": "Sort Key Name",
                 "description": "A name of the sort key.",
-                "tooltip": "A name of the sort key. 1 to 255 characters and case sensitive.",
+                "tooltip": "Specify a name of the sort key. 1 to 255 characters and case sensitive.",
                 "type": "text",
                 "name": "sortKeyName",
                 "required": true,
@@ -190,7 +200,7 @@
               {
                 "title": "Sort Key Data Type",
                 "description": "The data type for the sort key",
-                "tooltip": "The data type for the sort key",
+                "tooltip": "Specify the data type for the sort key",
                 "type": "select",
                 "name": "sortKeyDataType",
                 "options": [
@@ -223,7 +233,7 @@
               {
                 "title": "Read Capacity",
                 "description": "Specify the maximum number of strongly consistent reads consumed per second in the table.",
-                "tooltip": "The maximum number of strongly consistent reads consumed per second in the table.",
+                "tooltip": "Specify the maximum number of strongly consistent reads consumed per second in the table.",
                 "type": "integer",
                 "name": "readCapacityUnits",
                 "required": true,
@@ -234,7 +244,7 @@
               {
                 "title": "Write Capacity",
                 "description": "Specify the maximum number of writes consumed per second in the table.",
-                "tooltip": "The maximum number of writes consumed per second in the table.",
+                "tooltip": "Specify the maximum number of writes consumed per second in the table.",
                 "type": "integer",
                 "name": "writeCapacityUnits",
                 "required": true,
@@ -428,7 +438,7 @@
         {
           "title": "Table Name",
           "description": "Specify the table name that you want to delete from AWS DynamoDB.",
-          "tooltip": "The name of the table to be deleted",
+          "tooltip": "Specify table name to be deleted",
           "type": "text",
           "name": "TableName",
           "required": true,
@@ -618,7 +628,7 @@
         {
           "title": "Table Name",
           "description": "Specify the table name that you want to update.",
-          "tooltip": "The name of the table to be updated.",
+          "tooltip": "Specify the table name to be updated.",
           "type": "text",
           "name": "TableName",
           "required": true,
@@ -852,8 +862,8 @@
             "Update a Global Secondary Index": [
               {
                 "title": "Index Name",
-                "description": "The name of the global secondary index to be created.",
-                "tooltip": "A index name should be between 3 and 255 characters, containing only letters, numbers, underscores (_), hyphens (-), and periods (.)",
+                "description": "The name of the global secondary index to be updated.",
+                "tooltip": "Specify the global secondary index name to be updated",
                 "type": "text",
                 "name": "indexName",
                 "required": true,
@@ -886,8 +896,8 @@
             "Remove a Global Secondary Index": [
               {
                 "title": "Index Name",
-                "description": "The name of the global secondary index to be created.",
-                "tooltip": "A index name should be between 3 and 255 characters, containing only letters, numbers, underscores (_), hyphens (-), and periods (.)",
+                "description": "The name of the global secondary index to be removed.",
+                "tooltip": "Specify the global secondary index name to be removed",
                 "type": "text",
                 "name": "indexName",
                 "required": true,
@@ -1148,7 +1158,7 @@
         {
           "title": "Table Name",
           "description": "Specify the table name whose information you want to retrieve from AWS DynamoDB.",
-          "tooltip": "The name of the table to describe.",
+          "tooltip": "Specify the table name whose information you want to retrieve",
           "type": "text",
           "name": "TableName",
           "required": true,
@@ -1292,7 +1302,7 @@
     {
       "title": "Add Item",
       "operation": "add_item",
-      "description": "Add a new item in the specified table.",
+      "description": "Adds a new item in the specified table.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
@@ -1345,23 +1355,116 @@
         },
         {
           "title": "Table Name",
-          "description": "Specify the name of the table to contain the item.",
+          "description": "The name of the table to contain the item.",
           "tooltip": "The name of the table to contain the item.",
           "type": "text",
           "name": "TableName",
           "required": true,
           "visible": true,
-          "editable": true
+          "editable": true,
+          "value": ""
         },
         {
-          "title": "Item",
-          "description": "Specify the item that you want to add into the specified table.",
-          "tooltip": "Specify the item that you want to add into the specified table.",
-          "type": "json",
-          "name": "Item",
+          "title": "Partition Key Name",
+          "description": "A name of the partition key.",
+          "tooltip": "Provide a name for the partition key",
+          "type": "text",
+          "name": "partitionKeyName",
           "required": true,
           "visible": true,
-          "editable": true
+          "editable": true,
+          "value": ""
+        },
+        {
+          "title": "Partition Key Data Type",
+          "description": "The data type for the partition key value",
+          "tooltip": "The data type for the partition key value",
+          "type": "select",
+          "name": "partitionKeyDataType",
+          "options": [
+            "String",
+            "Binary",
+            "Number"
+          ],
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "value": ""
+        },
+        {
+          "title": "Partition Key Value",
+          "description": "A value of the partition key.",
+          "tooltip": "Provide a value for the partition key",
+          "type": "text",
+          "name": "partitionKeyValue",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "value": ""
+        },
+        {
+          "title": "Sort Key",
+          "description": "Provide a value for the sort key.",
+          "tooltip": "For a composite primary key, you must provide values for both the partition key and the sort key.",
+          "type": "checkbox",
+          "name": "sortKey",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "Sort Key Name",
+                "description": "A name of the sort key.",
+                "tooltip": "A name of the sort key.",
+                "type": "text",
+                "name": "sortKeyName",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": ""
+              },
+              {
+                "title": "Sort Key Data Type",
+                "description": "The data type for the sort key value",
+                "tooltip": "The data type for the sort key value",
+                "type": "select",
+                "name": "sortKeyDataType",
+                "options": [
+                  "String",
+                  "Binary",
+                  "Number"
+                ],
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": ""
+              },
+              {
+                "title": "Sort Key Value",
+                "description": "A value of the sort key.",
+                "tooltip": "A value of the sort key.",
+                "type": "text",
+                "name": "sortKeyValue",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": ""
+              }
+            ]
+          }
+        },
+        {
+          "title": "Additional Attributes",
+          "description": "Add additional attributes other than primary key attributes.",
+          "tooltip": "Provide data in json format : { \"AttributeName\": {\"S\": \"Value\"}, \"AttributeName\": { \"N\": \"Value\"} }. \nWhere \"S\"=String, \"N\"=Number, \"B\"=Binary, \"SS\"=StringSet, \"NS\"=NumberSet, \"BS\"=BinarySet, \"M\"=Dictionary, \"L\"=List, \"NULL\"=boolean, \"BOOL\"=boolean. For e.g. {\n  \"S_example\": {\n    \"S\": \"Hello\"\n  },\n  \"N_example\": {\n    \"N\": \"123.45\"\n  },\n  \"B_example\": {\n    \"B\": \"dGhpcyB0ZXh0IGlzIGJhc2U2NC1lbmNvZGVk\"\n  },\n  \"SS_example\": {\n    \"SS\": [\n      \"Giraffe\",\n      \"Hippo\",\n      \"Zebra\"\n    ]\n  },\n  \"NS_example\": {\n    \"NS\": [\n      \"42.2\",\n      \"-19\",\n      \"7.5\",\n      \"3.14\"\n    ]\n  },\n  \"BS_example\": {\n    \"BS\": [\n      \"U3Vubnk=\",\n      \"UmFpbnk=\",\n      \"U25vd3k=\"\n    ]\n  },\n  \"M_example\": {\n    \"M\": {\n      \"Name\": {\n        \"S\": \"Joe\"\n      },\n      \"Age\": {\n        \"N\": \"35\"\n      }\n    }\n  },\n  \"L_example\": {\n    \"L\": [\n      {\n        \"S\": \"Cookies\"\n      },\n      {\n        \"S\": \"Coffee\"\n      },\n      {\n        \"N\": \"3.14159\"\n      }\n    ]\n  },\n  \"NULL_example\": {\n    \"NULL\": true\n  },\n  \"BOOL_example\": {\n    \"BOOL\": true\n  }\n}",
+          "type": "json",
+          "name": "additionalAttributes",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "value": ""
         }
       ],
       "output_schema": {
@@ -1426,7 +1529,7 @@
     {
       "title": "Delete Item",
       "operation": "delete_item",
-      "description": "Delete an item from specified AWS DynamoDB table.",
+      "description": "Deleted an item in specified table",
       "category": "utilities",
       "enabled": true,
       "parameters": [
@@ -1478,14 +1581,106 @@
           }
         },
         {
-          "title": "Item Key",
-          "description": "Specify the key of the item that you want to delete from the table. For the syntax of item key, you can refer this: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Client.delete_item",
-          "tooltip": "Specify the key of the item. For the syntax of item key, you can refer this: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Client.delete_item.",
-          "type": "json",
-          "name": "Key",
+          "title": "Table Name",
+          "description": "The name of the table from which to delete the item.",
+          "tooltip": "The name of the table from which to delete the item.",
+          "type": "text",
+          "name": "TableName",
           "required": true,
           "visible": true,
-          "editable": true
+          "editable": true,
+          "value": ""
+        },
+        {
+          "title": "Partition Key Name",
+          "description": "A name of the partition key.",
+          "tooltip": "Provide a name for the partition key",
+          "type": "text",
+          "name": "partitionKeyName",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "value": ""
+        },
+        {
+          "title": "Partition Key Data Type",
+          "description": "The data type for the partition key value",
+          "tooltip": "The data type for the partition key value",
+          "type": "select",
+          "name": "partitionKeyDataType",
+          "options": [
+            "String",
+            "Binary",
+            "Number"
+          ],
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "value": ""
+        },
+        {
+          "title": "Partition Key Value",
+          "description": "A value of the partition key.",
+          "tooltip": "Provide a value for the partition key",
+          "type": "text",
+          "name": "partitionKeyValue",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "value": ""
+        },
+        {
+          "title": "Sort Key",
+          "description": "Provide a value for the sort key.",
+          "tooltip": "For a composite primary key, you must provide values for both the partition key and the sort key.",
+          "type": "checkbox",
+          "name": "sortKey",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "Sort Key Name",
+                "description": "A name of the sort key.",
+                "tooltip": "A name of the sort key.",
+                "type": "text",
+                "name": "sortKeyName",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": ""
+              },
+              {
+                "title": "Sort Key Data Type",
+                "description": "The data type for the sort key value",
+                "tooltip": "The data type for the sort key value",
+                "type": "select",
+                "name": "sortKeyDataType",
+                "options": [
+                  "String",
+                  "Binary",
+                  "Number"
+                ],
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": ""
+              },
+              {
+                "title": "Sort Key Value",
+                "description": "A value of the sort key.",
+                "tooltip": "A value of the sort key.",
+                "type": "text",
+                "name": "sortKeyValue",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": ""
+              }
+            ]
+          }
         }
       ],
       "output_schema": {
@@ -1603,23 +1798,105 @@
         },
         {
           "title": "Table Name",
-          "description": "Specify the table name in which you want search the item.",
-          "tooltip": "The name of the table containing the requested item.",
+          "description": "The name of the table containing the requested item.",
+          "tooltip": "Specify the table name containing the requested item.",
           "type": "text",
           "name": "TableName",
           "required": true,
           "visible": true,
-          "editable": true
+          "editable": true,
+          "value": ""
         },
         {
-          "title": "Item Key",
-          "description": "Specify the key of the item that you want to search from the table. For the syntax of item key, you can refer this: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Client.get_item",
-          "tooltip": "Specify the key of the item. For the syntax of item key, you can refer this: https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.Client.get_item.",
-          "type": "json",
-          "name": "Key",
+          "title": "Partition Key Name",
+          "description": "A name of the partition key.",
+          "tooltip": "Provide a name for the partition key",
+          "type": "text",
+          "name": "partitionKeyName",
           "required": true,
           "visible": true,
-          "editable": true
+          "editable": true,
+          "value": ""
+        },
+        {
+          "title": "Partition Key Data Type",
+          "description": "The data type for the partition key value",
+          "tooltip": "The data type for the partition key value",
+          "type": "select",
+          "name": "partitionKeyDataType",
+          "options": [
+            "String",
+            "Binary",
+            "Number"
+          ],
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "value": ""
+        },
+        {
+          "title": "Partition Key Value",
+          "description": "A value of the partition key.",
+          "tooltip": "Provide a value for the partition key",
+          "type": "text",
+          "name": "partitionKeyValue",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "value": ""
+        },
+        {
+          "title": "Sort Key",
+          "description": "Provide a value for the sort key.",
+          "tooltip": "For a composite primary key, you must provide values for both the partition key and the sort key.",
+          "type": "checkbox",
+          "name": "sortKey",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "Sort Key Name",
+                "description": "A name of the sort key.",
+                "tooltip": "A name of the sort key.",
+                "type": "text",
+                "name": "sortKeyName",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": ""
+              },
+              {
+                "title": "Sort Key Data Type",
+                "description": "The data type for the sort key value",
+                "tooltip": "The data type for the sort key value",
+                "type": "select",
+                "name": "sortKeyDataType",
+                "options": [
+                  "String",
+                  "Binary",
+                  "Number"
+                ],
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": ""
+              },
+              {
+                "title": "Sort Key Value",
+                "description": "A value of the sort key.",
+                "tooltip": "A value of the sort key.",
+                "type": "text",
+                "name": "sortKeyValue",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": ""
+              }
+            ]
+          }
         }
       ],
       "output_schema": {
@@ -1684,7 +1961,7 @@
     {
       "title": "Create Global Table",
       "operation": "create_global_table",
-      "description": "Creates a global table from an existing table.",
+      "description": "Creates a global table from an existing table. This operation only applies to Version 2017.11.29 of global tables.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
@@ -1738,7 +2015,7 @@
         {
           "title": "Global Table Name",
           "description": "Specify the global table name that to be created.",
-          "tooltip": "The global table name that to be created.",
+          "tooltip": "Specify the global table name that to be created.",
           "type": "text",
           "name": "globalTableName",
           "required": true,
