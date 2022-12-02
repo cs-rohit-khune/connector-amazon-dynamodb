@@ -126,6 +126,15 @@ def _create_attribute_dict(params, dict_object, mapping_object=None):
     return result
 
 
+def _get_billing_mode_attribute(params):
+    billing_mode = {}
+    if params.get('billingMode') == 'Provisioned':
+        billing_mode['BillingMode'] = _get_attribute_mapping(params.get('billingMode'), BILL_MODE_MAPPING)
+        billing_mode['ProvisionedThroughput'] = _create_attribute_dict(params, PROVISIONED_THROUGHPUT)
+    else:
+        billing_mode['BillingMode'] = _get_attribute_mapping(params.get('billingMode'), BILL_MODE_MAPPING)
+    return billing_mode
+
 def _get_attribute_definition(params):
     attrib_definition = {}
     if params.get('sortKey'):
@@ -147,16 +156,6 @@ def _get_key_schema(params):
     return key_schema
 
 
-def _get_billing_mode_attribute(params):
-    billing_mode = {}
-    if params.get('billingMode') == 'Provisioned':
-        billing_mode['BillingMode'] = _get_attribute_mapping(params.get('billingMode'), BILL_MODE_MAPPING)
-        billing_mode['ProvisionedThroughput'] = _create_attribute_dict(params, PROVISIONED_THROUGHPUT)
-    else:
-        billing_mode['BillingMode'] = _get_attribute_mapping(params.get('billingMode'), BILL_MODE_MAPPING)
-    return billing_mode
-
-    
 def _get_db_stream_attribute(params):
     db_stream = {}
     if params.get('streamEnabled') == 'Enable':
