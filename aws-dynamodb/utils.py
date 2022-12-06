@@ -243,7 +243,7 @@ def build_add_item_payload(params):
 
 
 def build_delete_or_search_item_payload(params):
-    payload = {'TableName': params.get('TableName'), 'Key': {}, 'ReturnValues': 'ALL_OLD'}
+    payload = {'TableName': params.get('TableName'), 'Key': {}}
     payload['Key'].update({params.get('partitionKeyName'): {_get_attribute_mapping(params.get('partitionKeyDataType'), DATA_TYPE_MAPPING): str(params.get('partitionKeyValue'))}})
     if params.get('sortKey'):
         payload['Key'].update({params.get('sortKeyName'): {_get_attribute_mapping(params.get('sortKeyDataType'), DATA_TYPE_MAPPING): str(params.get('sortKeyValue'))}})
