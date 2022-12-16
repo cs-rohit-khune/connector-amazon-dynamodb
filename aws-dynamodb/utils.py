@@ -135,6 +135,7 @@ def _get_billing_mode_attribute(params):
         billing_mode['BillingMode'] = _get_attribute_mapping(params.get('billingMode'), BILL_MODE_MAPPING)
     return billing_mode
 
+
 def _get_attribute_definition(params):
     attrib_definition = {}
     if params.get('sortKey'):
@@ -190,6 +191,20 @@ def _get_global_secondary_index_attribute(params, action):
         return {'Create': create}
 
 
+def _datatype_conversion(params):
+    res = json.loads(json.dumps(params), parse_int=str, parse_float=str)
+    for item in res.values():
+        if 'B' in item.keys():
+            temp = bytes(item['B'], 'utf-8')
+            item['B'] = temp
+        elif 'BS' in item.keys():
+            temp = []
+            for v in item['BS']:
+                temp.append(bytes(v, 'utf-8'))
+                item['BS'] = temp
+    return res
+
+
 def build_create_table_payload(params):
     payload = {'TableName': params.get('TableName')}
     payload.update(_get_attribute_definition(params))
@@ -238,7 +253,7 @@ def build_add_item_payload(params):
             }
         )
     if params.get('additionalAttributes'):
-        payload['Item'].update(params.get('additionalAttributes'))
+        payload['Item'].update(_datatype_conversion(params.get('additionalAttributes')))
     return payload
 
 

@@ -58,7 +58,7 @@ def get_table_details(config, params):
     return response
 
 
-def add_item(config, params):
+def create_or_update_table_item(config, params):
     client = get_aws_client(config, params, DYNAMODB_SERVICE)
     payload = build_add_item_payload(params)
     response = client.put_item(**payload)
@@ -166,7 +166,7 @@ operations = {
     'update_table': update_table,
     'get_table_list': get_table_list,
     'get_table_details': get_table_details,
-    'add_item': add_item,
+    'create_or_update_table_item': create_or_update_table_item,
     'delete_item': delete_item,
     'search_item': search_item,
     'create_global_table': create_global_table,
