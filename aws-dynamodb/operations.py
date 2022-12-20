@@ -6,6 +6,7 @@
 
 from .utils import *
 from .utils import _get_temp_credentials
+import itertools
 
 logger = get_logger('aws-dynamodb')
 
@@ -80,6 +81,15 @@ def search_item(config, params):
     response = client.get_item(**payload)
     response.pop('ResponseMetadata')
     return response
+
+
+def list_table_items(config, params):
+    client = get_aws_client(config, params, DYNAMODB_SERVICE)
+    payload = remove_unwanted_param(params)
+    paginator = client.get_paginator('scan')
+    response_iterator = paginator.paginate(**payload)
+    response = itertools.chain(*list(item.get('Items') for item in response_iterator))
+    return {'TableName': params.get('TableName'), 'TableItems': list(response)}
 
 
 def create_global_table(config, params):
@@ -169,6 +179,7 @@ operations = {
     'create_or_update_table_item': create_or_update_table_item,
     'delete_item': delete_item,
     'search_item': search_item,
+    'list_table_items': list_table_items,
     'create_global_table': create_global_table,
     'get_global_table_details': get_global_table_details,
     'get_global_table_list': get_global_table_list,
