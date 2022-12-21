@@ -2040,6 +2040,129 @@
       }
     },
     {
+      "title": "Get Table Items List",
+      "operation": "list_table_items",
+      "description": "Search items in the specified table.",
+      "category": "utilities",
+      "enabled": true,
+      "parameters": [
+        {
+          "title": "Assume a Role",
+          "type": "checkbox",
+          "name": "assume_role",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "tooltip": "Enable to assume a role",
+          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "value": false,
+          "onchange": {
+            "true": [
+              {
+                "title": "AWS Region",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "type": "text",
+                "name": "aws_region",
+                "placeholder": "e.g. us-east-2",
+                "tooltip": "Your account's AWS region",
+                "description": "AWS region of your account to access the AWS Access Analyzer"
+              },
+              {
+                "title": "Role ARN",
+                "type": "text",
+                "name": "role_arn",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "placeholder": "arn:aws:iam::{{account_id}}:role/{{role_name}}",
+                "tooltip": "ARN of the role that you want assume to execute this action on AWS.",
+                "description": "ARN of the role that you want assume to execute this action on AWS."
+              },
+              {
+                "title": "Session Name",
+                "type": "text",
+                "name": "session_name",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "tooltip": "Name of the session that will be created to execute this action on AWS.",
+                "description": "Name of the session that will be created to execute this action on AWS."
+              }
+            ]
+          }
+        },
+        {
+          "title": "Table Name",
+          "description": "The name of the table containing the requested items.",
+          "tooltip": "Specify the table name containing the requested items.",
+          "type": "text",
+          "name": "TableName",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "value": "Table_Name"
+        },
+        {
+          "title": "Select Attributes",
+          "description": "The table attributes to be returned in the result.",
+          "tooltip": "The table attributes(columns) to be returned in the result.",
+          "type": "select",
+          "name": "Select",
+          "options": [
+            "ALL_ATTRIBUTES",
+            "ALL_PROJECTED_ATTRIBUTES",
+            "SPECIFIC_ATTRIBUTES"
+          ],
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "value": "ALL_ATTRIBUTES",
+          "onchange": {
+            "ALL_PROJECTED_ATTRIBUTES": [
+              {
+                "title": "Index Name",
+                "description": "The name of a secondary index to scan. This index can be any local secondary index or global secondary index.",
+                "tooltip": "The name of a secondary index to scan. This index can be any local secondary index or global secondary index.",
+                "type": "text",
+                "name": "IndexName",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": "id-index"
+              }
+            ],
+            "SPECIFIC_ATTRIBUTES": [
+              {
+                "title": "Projection Expression",
+                "description": "A string that identifies one or more attributes to retrieve from the specified table or index.",
+                "tooltip": "Provide comma separated names of table columns you want to display",
+                "type": "text",
+                "name": "ProjectionExpression",
+                "required": true,
+                "visible": true,
+                "editable": true,
+                "value": "id,empName,age"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Page Size",
+          "description": "The maximum number of items to be return in result",
+          "tooltip": "Provide a value for the page size",
+          "type": "integer",
+          "name": "Limit",
+          "required": false,
+          "visible": true,
+          "editable": true,
+          "value": 10
+        }
+      ],
+      "output_schema": []
+    },
+    {
       "title": "Create Global Table",
       "operation": "create_global_table",
       "description": "Creates a global table for the existing table. This operation only applies to Version 2017.11.29 of global tables. Make sure that following conditions are satisfied by existing table before creating Global Table for the same.\n 1. A Table must be empty. \n 2. A Log stream with type 'New and Old Images' must be enabled for a table.",
