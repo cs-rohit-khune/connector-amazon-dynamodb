@@ -19,8 +19,8 @@
         "visible": true,
         "type": "select",
         "name": "config_type",
-        "tooltip": "AWS Configuration Type",
-        "description": "Type of configuration using which you will provide credentials to access AWS DynamoDB and perform automated actions. You can select between Access Credentials or AWS Instance IAM Role. If you select Access Credentials, then enter details in the following field(s): AWS Region: AWS region of your account to access the AWS CloudWatch Logs. AWS Access Key ID: ID of the AWS Access Key to access AWS services. AWS Secret Access Key: Key of the AWS Secret Access to access AWS services. If you select AWS Instance IAM Role then specify AWS Instance IAM Role Name to access AWS Services.",
+        "tooltip": "Select the Configuration Type from IAM Role or Access Credentials. The selected configuration type determines the type of credentials that you require to access AWS DynamoDB and perform automated actions.",
+        "description": "Select the Configuration Type from IAM Role or Access Credentials. The selected configuration type determines the type of credentials that you require to access AWS DynamoDB and perform automated actions. Enter the requested details as per the following: \n\nIAM Role \n\nAWS Instance IAM Role: Specify the IAM Role of your AWS instance that you need to access the AWS DynamoDB service. \n\nAccess Credentials \n\nAWS Region: Specify the AWS region of your account required to access the AWS DynamoDB service. \n\nAWS Access Key ID: Specify the AWS Access Key's ID required to access the AWS DynamoDB service. \n\nAWS Secret Access Key: Specify the AWS Secret Access Key required to access the AWS DynamoDB service.",
         "options": [
           "Access Credentials",
           "AWS Instance IAM Role"
@@ -34,8 +34,8 @@
               "visible": true,
               "type": "text",
               "name": "aws_iam_role",
-              "tooltip": "IAM Role Name of your AWS Instance where FortiSOAR installed, to access AWS services.",
-              "description": "IAM Role Name of your AWS Instance where FortiSOAR installed, to access AWS services."
+              "tooltip": "Specify the IAM Role of your AWS instance that you need to access the AWS DynamoDB service.",
+              "description": "Specify the IAM Role of your AWS instance that you need to access the AWS DynamoDB service."
             }
           ],
           "Access Credentials": [
@@ -47,8 +47,8 @@
               "type": "text",
               "name": "aws_region",
               "placeholder": "e.g. us-east-2",
-              "tooltip": "AWS region of your account to access the AWS DynamoDB",
-              "description": "AWS region of your account to access the AWS DynamoDB"
+              "tooltip": "Specify the AWS region of your account required to access the AWS DynamoDB service.",
+              "description": "Specify the AWS region of your account required to access the AWS DynamoDB service."
             },
             {
               "title": "AWS Access Key ID",
@@ -57,8 +57,8 @@
               "visible": true,
               "type": "text",
               "name": "aws_access_key",
-              "tooltip": "ID of the AWS Access Key to access AWS services",
-              "description": "ID of the AWS Access Key to access AWS services"
+              "tooltip": "Specify the AWS Access Key's ID required to access the AWS DynamoDB service.",
+              "description": "Specify the AWS Access Key's ID required to access the AWS DynamoDB service."
             },
             {
               "title": "AWS Secret Access Key",
@@ -67,15 +67,15 @@
               "visible": true,
               "type": "password",
               "name": "aws_secret_access_key",
-              "tooltip": "Key of the AWS Secret Access to access AWS services",
-              "description": "Key of the AWS Secret Access to access AWS services"
+              "tooltip": "Specify the AWS Secret Access Key required to access the AWS DynamoDB Log service.",
+              "description": "Specify the AWS Secret Access Key required to access the AWS DynamoDB Log service."
             }
           ]
         }
       },
       {
         "title": "Verify SSL",
-        "description": "Specifies whether the SSL certificate for the server is to be verified or not. By default, this option is set as True.",
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not. \nBy default, this option is set to True.",
         "required": false,
         "editable": true,
         "visible": true,
@@ -89,7 +89,7 @@
     {
       "title": "Create Table",
       "operation": "create_table",
-      "description": "Create a new table in AWS DynamoDB with the specified table name.",
+      "description": "Create a new table in AWS DynamoDB with the specified table name and attributes.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
@@ -100,8 +100,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -113,8 +113,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -401,8 +401,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -414,8 +414,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -592,8 +592,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -605,8 +605,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -645,8 +645,8 @@
         },
         {
           "title": "Operation",
-          "description": "Select the operation to be performed on the specified table.",
-          "tooltip": "Select operation to be performed on the table.",
+          "description": "Select the update operation to be performed on the specified table.",
+          "tooltip": "Select update operation to be performed on the table.",
           "type": "select",
           "name": "updateOperation",
           "options": [
@@ -723,7 +723,7 @@
                   "Enable": [
                     {
                       "title": "Stream View Type",
-                      "description": "Capture item-level changes in your table, and push the changes to a DynamoDB stream.",
+                      "description": "Captures item-level changes in your table, and determines information is written to a DynamoDB stream. The Valid values are =:\n - Key attributes only: Only the key attributes of the modified item are written to the stream\n - New image: The entire item, as it appears after it was modified, is written to the stream.\n - Old image: The entire item, as it appeared before it was modified, is written to the stream.\n - New and old images: Both the new and the old item images of the item are written to the stream.",
                       "tooltip": "Select which information to be pushed on DynamoDB stream for any changed items in the table",
                       "type": "select",
                       "name": "streamViewType",
@@ -1074,8 +1074,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -1087,8 +1087,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -1134,8 +1134,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -1147,8 +1147,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -1322,7 +1322,7 @@
     {
       "title": "Create or Update Table Item",
       "operation": "create_or_update_table_item",
-      "description": "Adds a new item in the specified table.",
+      "description": "Adds a new or updates an existing item in the specified table.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
@@ -1333,8 +1333,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -1346,8 +1346,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -1621,8 +1621,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -1634,8 +1634,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -1837,8 +1837,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -1850,8 +1850,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -2053,8 +2053,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -2066,8 +2066,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -2106,7 +2106,7 @@
         },
         {
           "title": "Select Attributes",
-          "description": "The table attributes to be returned in the result.",
+          "description": "The table attributes to be returned in the result.Choose option below:\n - ALL_ATTRIBUTES : The query returns table rows with all the columns\n - ALL_PROJECTED_ATTRIBUTES : The query returns table rows with all the columns mentioned in the global or secondary index of the table\n - SPECIFIC_ATTRIBUTES : The query returns table rows for specific attributes mentioned in Projection Expression",
           "tooltip": "The table attributes(columns) to be returned in the result.",
           "type": "select",
           "name": "Select",
@@ -2176,8 +2176,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -2189,8 +2189,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -2287,8 +2287,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -2300,8 +2300,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -2387,8 +2387,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -2400,8 +2400,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -2445,7 +2445,7 @@
     {
       "title": "Create Table Backup",
       "operation": "create_backup",
-      "description": "Creates a backup for an existing table.",
+      "description": "Creates a backup for an existing table in AWS DynamoDB.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
@@ -2456,8 +2456,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -2469,8 +2469,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -2509,8 +2509,8 @@
         },
         {
           "title": "Backup Name",
-          "description": "Specify the name for the backup table.",
-          "tooltip": "Specify the name for the backup table.",
+          "description": "Specify the backup name for table.",
+          "tooltip": "Specify the backup name for table.",
           "type": "text",
           "name": "BackupName",
           "required": true,
@@ -2534,7 +2534,7 @@
     {
       "title": "Get Table Backup Details",
       "operation": "get_table_backup_details",
-      "description": "Retrieve the details of an existing backup of a table.",
+      "description": "Retrieve the details of an existing backup of a table in AWS DynamoDB.",
       "category": "utilities",
       "enabled": true,
       "parameters": [
@@ -2545,8 +2545,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -2558,8 +2558,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -2694,8 +2694,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -2707,8 +2707,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
@@ -2765,8 +2765,8 @@
           "required": false,
           "editable": true,
           "visible": true,
-          "tooltip": "Enable to assume a role",
-          "description": "Select this option to assume a role. This parameter is required, if you have specified 'IAM Role' as the 'Configuration Type'. If you have specified 'Access Credentials' as the 'Configuration Type', then this parameter is optional. If you choose 'True', then you must specify the following parameters: AWS Region: AWS region of your account to access the AWS Access Analyzer Role ARN: ARN of the role that you want assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.",
+          "tooltip": "Select this checkbox if you have specified IAM Role as the configuration type.",
+          "description": "Select this checkbox if you have specified IAM Role as the configuration type in Configuration Parameters. Enabling this option makes the following parameters mandatory: \n\nAWS Region: AWS region of your account to access the AWS DynamoDB \n\nRole ARN: ARN of the role that you want assume to execute this action on AWS. \n\nSession Name: Name of the session that will be created to execute this action on AWS. \n\nIf you have specified Access Credentials as the configuration type, then enabling this parameter is optional.",
           "value": false,
           "onchange": {
             "true": [
@@ -2778,8 +2778,8 @@
                 "type": "text",
                 "name": "aws_region",
                 "placeholder": "e.g. us-east-2",
-                "tooltip": "Your account's AWS region",
-                "description": "AWS region of your account to access the AWS Access Analyzer"
+                "tooltip": "AWS region of your account to access the AWS DynamoDB",
+                "description": "AWS region of your account to access the AWS DynamoDB"
               },
               {
                 "title": "Role ARN",
