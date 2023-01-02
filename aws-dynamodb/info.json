@@ -55,7 +55,7 @@
               "required": true,
               "editable": true,
               "visible": true,
-              "type": "text",
+              "type": "password",
               "name": "aws_access_key",
               "tooltip": "Specify the AWS Access Key's ID required to access the AWS DynamoDB service.",
               "description": "Specify the AWS Access Key's ID required to access the AWS DynamoDB service."
