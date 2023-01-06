@@ -91,6 +91,7 @@
       "operation": "create_table",
       "description": "Create a new table in AWS DynamoDB with the specified table name and attributes.",
       "category": "utilities",
+      "annotation": "create_table",
       "enabled": true,
       "parameters": [
         {
@@ -392,6 +393,7 @@
       "operation": "delete_table",
       "description": "Delete an existing table from AWS DynamoDB",
       "category": "utilities",
+      "annotation": "delete_table",
       "enabled": true,
       "parameters": [
         {
@@ -583,6 +585,7 @@
       "operation": "update_table",
       "description": "Updated an existing table of AWS DynamoDB.",
       "category": "utilities",
+      "annotation": "update_table",
       "enabled": true,
       "parameters": [
         {
@@ -1065,6 +1068,7 @@
       "operation": "get_table_list",
       "description": "Retrieves list of existing tables from AWS DynamoDB",
       "category": "utilities",
+      "annotation": "get_table_list",
       "enabled": true,
       "parameters": [
         {
@@ -1125,6 +1129,7 @@
       "operation": "get_table_details",
       "description": "Retrieve information about specified table from AWS DynamoDB",
       "category": "utilities",
+      "annotation": "get_table_details",
       "enabled": true,
       "parameters": [
         {
@@ -1324,6 +1329,7 @@
       "operation": "create_or_update_table_item",
       "description": "Adds a new or updates an existing item in the specified table.",
       "category": "utilities",
+      "annotation": "create_or_update_table_item",
       "enabled": true,
       "parameters": [
         {
@@ -1612,6 +1618,7 @@
       "operation": "delete_item",
       "description": "Deleted an item in specified table",
       "category": "utilities",
+      "annotation": "delete_item",
       "enabled": true,
       "parameters": [
         {
@@ -1828,6 +1835,7 @@
       "operation": "search_item",
       "description": "Search items in the specified table.",
       "category": "utilities",
+      "annotation": "search_table_item",
       "enabled": true,
       "parameters": [
         {
@@ -2044,6 +2052,7 @@
       "operation": "list_table_items",
       "description": "Search items in the specified table.",
       "category": "utilities",
+      "annotation": "list_table_items",
       "enabled": true,
       "parameters": [
         {
@@ -2167,6 +2176,7 @@
       "operation": "create_global_table",
       "description": "Creates a global table for the existing table. This operation only applies to Version 2017.11.29 of global tables. Make sure that following conditions are satisfied by existing table before creating Global Table for the same.\n 1. A Table must be empty. \n 2. A Log stream with type 'New and Old Images' must be enabled for a table.",
       "category": "utilities",
+      "annotation": "create_global_table",
       "enabled": true,
       "parameters": [
         {
@@ -2278,6 +2288,7 @@
       "operation": "get_global_table_details",
       "description": "Retrieve the information about the specified global table.",
       "category": "utilities",
+      "annotation": "get_global_table_details",
       "enabled": true,
       "parameters": [
         {
@@ -2378,6 +2389,7 @@
       "operation": "get_global_table_list",
       "description": "Retrieves list of all the global tables that have a replica in the specified Region.",
       "category": "utilities",
+      "annotation": "get_global_table_list",
       "enabled": true,
       "parameters": [
         {
@@ -2447,6 +2459,7 @@
       "operation": "create_backup",
       "description": "Creates a backup for an existing table in AWS DynamoDB.",
       "category": "utilities",
+      "annotation": "create_backup",
       "enabled": true,
       "parameters": [
         {
@@ -2536,6 +2549,7 @@
       "operation": "get_table_backup_details",
       "description": "Retrieve the details of an existing backup of a table in AWS DynamoDB.",
       "category": "utilities",
+      "annotation": "get_table_backup_details",
       "enabled": true,
       "parameters": [
         {
@@ -2685,6 +2699,7 @@
       "operation": "get_table_backup_list",
       "description": "Retrieves list of backups from AWS DynamoDB.",
       "category": "utilities",
+      "annotation": "get_table_backup_list",
       "enabled": true,
       "parameters": [
         {
@@ -2756,6 +2771,7 @@
       "operation": "delete_table_backup",
       "description": "Deletes an existing backup of a table from AWS DynamoDB.",
       "category": "utilities",
+      "annotation": "delete_table_backup",
       "enabled": true,
       "parameters": [
         {
