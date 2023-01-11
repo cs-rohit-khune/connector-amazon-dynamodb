@@ -9,7 +9,7 @@
   "category": "AWS Services",
   "icon_small_name": "cyops_small.png",
   "icon_large_name": "cyops_large.png",
-  "help_online": "",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.0/aws-dynamodb/477/aws-dynamodb-v1-0-0",
   "configuration": {
     "fields": [
       {
@@ -20,7 +20,7 @@
         "type": "select",
         "name": "config_type",
         "tooltip": "Select the Configuration Type from IAM Role or Access Credentials. The selected configuration type determines the type of credentials that you require to access AWS DynamoDB and perform automated actions.",
-        "description": "Select the Configuration Type from IAM Role or Access Credentials. The selected configuration type determines the type of credentials that you require to access AWS DynamoDB and perform automated actions. Enter the requested details as per the following: \n\nIAM Role \n\nAWS Instance IAM Role: Specify the IAM Role of your AWS instance that you need to access the AWS DynamoDB service. \n\nAccess Credentials \n\nAWS Region: Specify the AWS region of your account required to access the AWS DynamoDB service. \n\nAWS Access Key ID: Specify the AWS Access Key's ID required to access the AWS DynamoDB service. \n\nAWS Secret Access Key: Specify the AWS Secret Access Key required to access the AWS DynamoDB service.",
+        "description": "Select the Configuration Type from IAM Role or Access Credentials. The selected configuration type determines the type of credentials that you require to access AWS DynamoDB and perform automated actions. Enter the requested details as per the following:  \n\nIAM Role  \n\nAWS Instance IAM Role: Specify the IAM Role of your AWS instance that you need to access the AWS DynamoDB service. \n\nAccess Credentials  \n\nAWS Region: Specify the AWS region of your account required to access the AWS DynamoDB service. \n\nAWS Access Key ID: Specify the AWS Access Key's ID required to access the AWS DynamoDB service. \n\nAWS Secret Access Key: Specify the AWS Secret Access Key required to access the AWS DynamoDB service.",
         "options": [
           "Access Credentials",
           "AWS Instance IAM Role"
@@ -89,7 +89,7 @@
     {
       "title": "Create Table",
       "operation": "create_table",
-      "description": "Create a new table in AWS DynamoDB with the specified table name and attributes.",
+      "description": "Creates a new table in AWS DynamoDB based on the table name, Partition Key Name, and other attributes you have specified.",
       "category": "utilities",
       "annotation": "create_table",
       "enabled": true,
@@ -143,8 +143,8 @@
         },
         {
           "title": "Table Name",
-          "description": "Specify the table name that you want create in AWS DynamoDB.A table name should be between 3 and 255 characters, containing only letters, numbers, underscores (_), hyphens (-), and periods (.).",
-          "tooltip": "Specify the table name. A table name should be between 3 and 255 characters, containing only letters, numbers, underscores (_), hyphens (-), and periods (.)",
+          "description": "Specify a name for the table to create in AWS DynamoDB. A table name should have 3 to 255 characters and must contain only letters, numbers, underscores (_), hyphens (-), and periods (.).",
+          "tooltip": "A table name should have 3 to 255 characters and must contain only letters, numbers, underscores (_), hyphens (-), and periods (.).",
           "type": "text",
           "name": "TableName",
           "required": true,
@@ -154,8 +154,8 @@
         },
         {
           "title": "Partition Key Name",
-          "description": "Specify the partition key is part of the table's primary key. It is a hash value that is used to retrieve items from your table and allocate data across hosts for scalability and availability.",
-          "tooltip": "Specify the name of the partition key. 1 to 255 characters and case sensitive.",
+          "description": "Specify a name of the partition key. It must contain 1 to 255 characters and is case-sensitive. A partition key is a part of the table's primary key. It is a hash value that is used to retrieve items from a table and allocate data across hosts for scalability and availability.",
+          "tooltip": "Specify a name of the partition key. It must contain 1 to 255 characters and is case-sensitive.",
           "type": "text",
           "name": "partitionKeyName",
           "required": true,
@@ -165,8 +165,8 @@
         },
         {
           "title": "Partition Key Data Type",
-          "description": "Specify the data type for the partition key",
-          "tooltip": "Specify the data type for the partition key",
+          "description": "Select a data type for the partition key from the following options:  \n\nString \n\nBinary \n\nNumber",
+          "tooltip": "Select a data type for the partition key from the following options",
           "type": "select",
           "name": "partitionKeyDataType",
           "options": [
@@ -181,8 +181,8 @@
         },
         {
           "title": "Sort Key (Optional)",
-          "description": "Specify the sort key is second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key.",
-          "tooltip": "Specify the sort key is second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key.",
+          "description": "Specify the sort key for this table.The sort key is the second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key.",
+          "tooltip": "Specify the sort key for this table.The sort key is the second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key.",
           "type": "checkbox",
           "name": "sortKey",
           "required": false,
@@ -193,8 +193,8 @@
             "true": [
               {
                 "title": "Sort Key Name",
-                "description": "A name of the sort key.",
-                "tooltip": "Specify a name of the sort key. 1 to 255 characters and case sensitive.",
+                "description": " Specify a name for the sort key. It must contain 1 to 255 characters and is case-sensitive.",
+                "tooltip": "Specify a name for the sort key. It must contain 1 to 255 characters and is case-sensitive.",
                 "type": "text",
                 "name": "sortKeyName",
                 "required": true,
@@ -204,8 +204,8 @@
               },
               {
                 "title": "Sort Key Data Type",
-                "description": "The data type for the sort key",
-                "tooltip": "Specify the data type for the sort key",
+                "description": "Select a data type for the sort key from the following options:  \n\nString \n\nBinary \n\nNumber",
+                "tooltip": "Select a data type for the sort key from the following options",
                 "type": "select",
                 "name": "sortKeyDataType",
                 "options": [
@@ -223,7 +223,7 @@
         },
         {
           "title": "Billing Mode",
-          "description": "Specify this controls how you are charged for read and write throughput and how you manage capacity.",
+          "description": "Select a billing mode from the following options. Billing mode controls how you are charged for read and write throughput and how you manage capacity.",
           "tooltip": "Select 'Provisioned' mode for predictable workloads or Select 'On Demand' for unpredictable workloads.",
           "type": "select",
           "name": "billingMode",
@@ -391,7 +391,7 @@
     {
       "title": "Delete Table",
       "operation": "delete_table",
-      "description": "Delete an existing table from AWS DynamoDB",
+      "description": "Deletes an existing table from AWS DynamoDB based on the table name that you have specified.",
       "category": "utilities",
       "annotation": "delete_table",
       "enabled": true,
@@ -445,8 +445,8 @@
         },
         {
           "title": "Table Name",
-          "description": "Specify the table name that you want to delete from AWS DynamoDB.",
-          "tooltip": "Specify table name to be deleted",
+          "description": "Specify the name of the table to delete from AWS DynamoDB.",
+          "tooltip": "Specify the name of the table to delete from AWS DynamoDB.",
           "type": "text",
           "name": "TableName",
           "required": true,
@@ -583,7 +583,7 @@
     {
       "title": "Update Table",
       "operation": "update_table",
-      "description": "Updated an existing table of AWS DynamoDB.",
+      "description": "Updates an existing table in AWS DynamoDB based on the table name, operation, and other attributes you have specified.",
       "category": "utilities",
       "annotation": "update_table",
       "enabled": true,
@@ -637,8 +637,8 @@
         },
         {
           "title": "Table Name",
-          "description": "Specify the table name that you want to update.",
-          "tooltip": "Specify the table name to be updated.",
+          "description": "Specify a name for the table to update in AWS DynamoDB.",
+          "tooltip": "Specify a name for the table to update in AWS DynamoDB.",
           "type": "text",
           "name": "TableName",
           "required": true,
@@ -648,8 +648,8 @@
         },
         {
           "title": "Operation",
-          "description": "Select the update operation to be performed on the specified table.",
-          "tooltip": "Select update operation to be performed on the table.",
+          "description": "Select the update operation to be performed on the specified table",
+          "tooltip": "Select the update operation to be performed on the specified table from the following options",
           "type": "select",
           "name": "updateOperation",
           "options": [
@@ -667,7 +667,7 @@
             "Modify Provisioned Throughput": [
               {
                 "title": "Billing Mode",
-                "description": "Specify this controls how you are charged for read and write throughput and how you manage capacity.",
+                "description": "Select this option to modify the provisioned throughput and select the billing mode. Billing mode controls how you are charged for read and write throughput and how you manage capacity.",
                 "tooltip": "Select 'Provisioned' mode for predictable workloads or Select 'On Demand' for unpredictable workloads.",
                 "type": "select",
                 "name": "billingMode",
@@ -684,7 +684,7 @@
                     {
                       "title": "Read Capacity",
                       "description": "Specify the maximum number of strongly consistent reads consumed per second in the table.",
-                      "tooltip": "The maximum number of strongly consistent reads consumed per second",
+                      "tooltip": "Specify the maximum number of strongly consistent reads consumed per second in the table.",
                       "type": "integer",
                       "name": "readCapacityUnits",
                       "required": true,
@@ -695,7 +695,7 @@
                     {
                       "title": "Write Capacity",
                       "description": "Specify the maximum number of writes consumed per second in the table.",
-                      "tooltip": "The maximum number of writes consumed per second",
+                      "tooltip": "Specify the maximum number of writes consumed per second in the table.",
                       "type": "integer",
                       "name": "writeCapacityUnits",
                       "required": true,
@@ -710,8 +710,8 @@
             "Enable or Disable DynamoDB Streams": [
               {
                 "title": "Stream Status",
-                "description": "Enables or disable DynamoDB Streams on the table.",
-                "tooltip": "Check to enable DynamoDB Streams on the table.",
+                "description": "Select this option to enable or disable streams on DynamoDB. Streams are logs that capture changes to a DynamoDB table.",
+                "tooltip": "Select this option to enable or disable streams on DynamoDB.",
                 "type": "select",
                 "name": "streamEnabled",
                 "options": [
@@ -726,8 +726,8 @@
                   "Enable": [
                     {
                       "title": "Stream View Type",
-                      "description": "Captures item-level changes in your table, and determines information is written to a DynamoDB stream. The Valid values are =:\n - Key attributes only: Only the key attributes of the modified item are written to the stream\n - New image: The entire item, as it appears after it was modified, is written to the stream.\n - Old image: The entire item, as it appeared before it was modified, is written to the stream.\n - New and old images: Both the new and the old item images of the item are written to the stream.",
-                      "tooltip": "Select which information to be pushed on DynamoDB stream for any changed items in the table",
+                      "description": "Stream View Type captures item-level changes in your table, and determines the information to write to a DynamoDB stream.",
+                      "tooltip": "Stream View Type captures item-level changes in your table, and determines the information to write to a DynamoDB stream.",
                       "type": "select",
                       "name": "streamViewType",
                       "options": [
@@ -748,8 +748,8 @@
             "Create a New Global Secondary Index": [
               {
                 "title": "Index Name",
-                "description": "The name of the global secondary index to be created.",
-                "tooltip": "A index name should be between 3 and 255 characters, containing only letters, numbers, underscores (_), hyphens (-), and periods (.)",
+                "description": "Specify a name for the secondary index to create in AWS DynamoDB. The name should have 3 to 255 characters and must contain only letters, numbers, underscores (_), hyphens (-), and periods (.).",
+                "tooltip": "A index name should should have 3 to 255 characters and must contain only letters, numbers, underscores (_), hyphens (-), and periods (.).",
                 "type": "text",
                 "name": "indexName",
                 "required": true,
@@ -759,8 +759,8 @@
               },
               {
                 "title": "Partition Key Name",
-                "description": "The partition key of the global index",
-                "tooltip": "A name of the partition key. 1 to 255 characters and case sensitive.",
+                "description": "Specify a name of the partition key. It must contain 1 to 255 characters and is case-sensitive. A partition key is a part of the table's primary key. It is a hash value that is used to retrieve items from a table and allocate data across hosts for scalability and availability.",
+                "tooltip": "A partition key is a part of the table's primary key. Specify a name of the partition key. It must contain 1 to 255 characters and is case-sensitive.",
                 "type": "text",
                 "name": "partitionKeyName",
                 "required": true,
@@ -770,8 +770,8 @@
               },
               {
                 "title": "Partition Key Data Type",
-                "description": "The data type for the partition key",
-                "tooltip": "The data type for the partition key",
+                "description": "Select a data type for the partition key from the following options:  \n\nString \n\nBinary \n\nNumber",
+                "tooltip": "Select a data type for the partition key from the following options",
                 "type": "select",
                 "name": "partitionKeyDataType",
                 "options": [
@@ -786,8 +786,8 @@
               },
               {
                 "title": "Sort Key (Optional)",
-                "description": "The sort key of the global index.",
-                "tooltip": "The sort key allows you to sort or search among all items sharing the same partition key.",
+                "description": "Specify the sort key for this table.The sort key is the second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key. If you enable this option, then specify the following options:  \n\nSort Key Name: Specify a name for the sort key. It must contain 1 to 255 characters and is case-sensitive. \n\nSort Key Data Type: Select a data type for the sort key from the following options:  \n\nString \n\nBinary \n\nNumber",
+                "tooltip": "Specify the sort key for this table.The sort key is the second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key.",
                 "type": "checkbox",
                 "name": "sortKey",
                 "required": false,
@@ -798,8 +798,8 @@
                   "true": [
                     {
                       "title": "Sort Key Name",
-                      "description": "A name of the sort key.",
-                      "tooltip": "A name of the sort key. 1 to 255 characters and case sensitive.",
+                      "description": "Specify a name for the sort key. It must contain 1 to 255 characters and is case-sensitive.",
+                      "tooltip": "Specify a name for the sort key. It must contain 1 to 255 characters and is case-sensitive.",
                       "type": "text",
                       "name": "sortKeyName",
                       "required": true,
@@ -809,8 +809,8 @@
                     },
                     {
                       "title": "Sort Key Data Type",
-                      "description": "The data type for the sort key",
-                      "tooltip": "The data type for the sort key",
+                      "description": "Select a data type for the sort key from the following options:  \n\nString \n\nBinary \n\nNumber",
+                      "tooltip": "Select a data type for the sort key from the following options",
                       "type": "select",
                       "name": "sortKeyDataType",
                       "options": [
@@ -828,8 +828,8 @@
               },
               {
                 "title": "Read Capacity",
-                "description": "The maximum number of strongly consistent reads consumed per second",
-                "tooltip": "The maximum number of strongly consistent reads consumed per second",
+                "description": "Specify the maximum number of strongly consistent reads consumed per second in the table.",
+                "tooltip": "Specify the maximum number of strongly consistent reads consumed per second in the table.",
                 "type": "integer",
                 "name": "readCapacityUnits",
                 "required": true,
@@ -839,8 +839,8 @@
               },
               {
                 "title": "Write Capacity",
-                "description": "The maximum number of writes consumed per second",
-                "tooltip": "The maximum number of writes consumed per second",
+                "description": "Specify the maximum number of writes consumed per second in the table.",
+                "tooltip": "Specify the maximum number of writes consumed per second in the table.",
                 "type": "integer",
                 "name": "writeCapacityUnits",
                 "required": true,
@@ -882,8 +882,8 @@
             "Update a Global Secondary Index": [
               {
                 "title": "Index Name",
-                "description": "The name of the global secondary index to be updated.",
-                "tooltip": "Specify the global secondary index name to be updated",
+                "description": "Specify the name of the existing secondary index to update in AWS DynamoDB.",
+                "tooltip": "Specify the name of the existing secondary index to update in AWS DynamoDB.",
                 "type": "text",
                 "name": "indexName",
                 "required": true,
@@ -893,8 +893,8 @@
               },
               {
                 "title": "Read Capacity",
-                "description": "The maximum number of strongly consistent reads consumed per second",
-                "tooltip": "The maximum number of strongly consistent reads consumed per second",
+                "description": "Specify the maximum number of strongly consistent reads consumed per second in the table.",
+                "tooltip": "Specify the maximum number of strongly consistent reads consumed per second in the table.",
                 "type": "integer",
                 "name": "readCapacityUnits",
                 "required": true,
@@ -904,8 +904,8 @@
               },
               {
                 "title": "Write Capacity",
-                "description": "The maximum number of writes consumed per second",
-                "tooltip": "The maximum number of writes consumed per second",
+                "description": "Specify the maximum number of writes consumed per second in the table.",
+                "tooltip": "Specify the maximum number of writes consumed per second in the table.",
                 "type": "integer",
                 "name": "writeCapacityUnits",
                 "required": true,
@@ -917,8 +917,8 @@
             "Remove a Global Secondary Index": [
               {
                 "title": "Index Name",
-                "description": "The name of the global secondary index to be removed.",
-                "tooltip": "Specify the global secondary index name to be removed",
+                "description": "Specify the name of the existing secondary index to delete from AWS DynamoDB.",
+                "tooltip": "Specify the name of the existing secondary index to delete from AWS DynamoDB.",
                 "type": "text",
                 "name": "indexName",
                 "required": true,
@@ -1066,7 +1066,7 @@
     {
       "title": "Get Table List",
       "operation": "get_table_list",
-      "description": "Retrieves list of existing tables from AWS DynamoDB",
+      "description": "Retrieves a list of all existing tables from AWS DynamoDB.",
       "category": "utilities",
       "annotation": "get_table_list",
       "enabled": true,
@@ -1127,7 +1127,7 @@
     {
       "title": "Get Table Details",
       "operation": "get_table_details",
-      "description": "Retrieve information about specified table from AWS DynamoDB",
+      "description": "Retrieves information about an existing table from AWS DynamoDB based on the table name that you have specified.",
       "category": "utilities",
       "annotation": "get_table_details",
       "enabled": true,
@@ -1181,8 +1181,8 @@
         },
         {
           "title": "Table Name",
-          "description": "Specify the table name whose information you want to retrieve from AWS DynamoDB.",
-          "tooltip": "Specify the table name whose information you want to retrieve",
+          "description": "Specify the name of the table whose information you want to retrieve from AWS DynamoDB.",
+          "tooltip": "Specify the name of the table whose information you want to retrieve from AWS DynamoDB.",
           "type": "text",
           "name": "TableName",
           "required": true,
@@ -1327,7 +1327,7 @@
     {
       "title": "Create or Update Table Item",
       "operation": "create_or_update_table_item",
-      "description": "Adds a new or updates an existing item in the specified table.",
+      "description": "Creates a new or updates an existing item in an AWS DynamoDB table based on the table name, partition key name, and other attributes you have specified.",
       "category": "utilities",
       "annotation": "create_or_update_table_item",
       "enabled": true,
@@ -1381,8 +1381,8 @@
         },
         {
           "title": "Table Name",
-          "description": "The name of the table to contain the item.",
-          "tooltip": "The name of the table to contain the item.",
+          "description": "Specify the name of the table in which to create a new item or update an existing table item.",
+          "tooltip": "Specify the name of the table in which to create a new item or update an existing table item.",
           "type": "text",
           "name": "TableName",
           "required": true,
@@ -1392,8 +1392,8 @@
         },
         {
           "title": "Partition Key Name",
-          "description": "A name of the partition key.",
-          "tooltip": "Provide a name for the partition key",
+          "description": "Specify the name of the partition key.",
+          "tooltip": "Specify the name of the partition key.",
           "type": "text",
           "name": "partitionKeyName",
           "required": true,
@@ -1403,8 +1403,8 @@
         },
         {
           "title": "Partition Key Data Type",
-          "description": "The data type for the partition key value",
-          "tooltip": "The data type for the partition key value",
+          "description": "Select a data type for the partition key from the following options:  \n\nString \n\nBinary \n\nNumber",
+          "tooltip": "Select a data type for the partition key from the following options",
           "type": "select",
           "name": "partitionKeyDataType",
           "options": [
@@ -1419,8 +1419,8 @@
         },
         {
           "title": "Partition Key Value",
-          "description": "A value of the partition key.",
-          "tooltip": "Provide a value for the partition key",
+          "description": "Specify a value of the partition key to create the item or to update an existing item.",
+          "tooltip": "Specify a value of the partition key to create the item or to update an existing item.",
           "type": "text",
           "name": "partitionKeyValue",
           "required": true,
@@ -1429,9 +1429,9 @@
           "value": "1"
         },
         {
-          "title": "Sort Key",
-          "description": "Provide a value for the sort key.",
-          "tooltip": "For a composite primary key, you must provide values for both the partition key and the sort key.",
+          "title": "Sort Key (Optional)",
+          "description": "Specify the sort key for this table.The sort key is the second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key. If you enable this option, then specify the following options:  \n\nSort Key Name: Specify a name for the sort key. It must contain 1 to 255 characters and is case-sensitive. \n\nSort Key Data Type: Select a data type for the sort key from the following options:  \n\nString \n\nBinary \n\nNumber",
+          "tooltip": "Specify the sort key for this table",
           "type": "checkbox",
           "name": "sortKey",
           "required": false,
@@ -1442,8 +1442,8 @@
             "true": [
               {
                 "title": "Sort Key Name",
-                "description": "A name of the sort key.",
-                "tooltip": "A name of the sort key.",
+                "description": "Specify a name for the sort key.",
+                "tooltip": "Specify a name for the sort key.",
                 "type": "text",
                 "name": "sortKeyName",
                 "required": true,
@@ -1453,8 +1453,8 @@
               },
               {
                 "title": "Sort Key Data Type",
-                "description": "The data type for the sort key value",
-                "tooltip": "The data type for the sort key value",
+                "description": "Select a data type for the sort key from the following options:  \n\nString \n\nBinary \n\nNumber",
+                "tooltip": "Select a data type for the sort key from the following options",
                 "type": "select",
                 "name": "sortKeyDataType",
                 "options": [
@@ -1469,8 +1469,8 @@
               },
               {
                 "title": "Sort Key Value",
-                "description": "A value of the sort key.",
-                "tooltip": "A value of the sort key.",
+                "description": "Specify a name for the sort value.",
+                "tooltip": "Specify a name for the sort value.",
                 "type": "text",
                 "name": "sortKeyValue",
                 "required": true,
@@ -1483,8 +1483,8 @@
         },
         {
           "title": "Additional Attributes",
-          "description": "Add additional attributes other than primary key attributes.",
-          "tooltip": "Provide data in json format : { \"AttributeName\": {\"S\": \"Value\"}, \"AttributeName\": { \"N\": \"Value\"} }. \nWhere \"S\"=String, \"N\"=Number, \"B\"=Binary, \"SS\"=StringSet, \"NS\"=NumberSet, \"BS\"=BinarySet, \"M\"=Dictionary, \"L\"=List, \"NULL\"=boolean, \"BOOL\"=boolean. For e.g. {\n  \"S_example\": {\n    \"S\": \"Hello\"\n  },\n  \"N_example\": {\n    \"N\": \"123.45\"\n  },\n  \"B_example\": {\n    \"B\": \"dGhpcyB0ZXh0IGlzIGJhc2U2NC1lbmNvZGVk\"\n  },\n  \"SS_example\": {\n    \"SS\": [\n      \"Giraffe\",\n      \"Hippo\",\n      \"Zebra\"\n    ]\n  },\n  \"NS_example\": {\n    \"NS\": [\n      \"42.2\",\n      \"-19\",\n      \"7.5\",\n      \"3.14\"\n    ]\n  },\n  \"BS_example\": {\n    \"BS\": [\n      \"U3Vubnk=\",\n      \"UmFpbnk=\",\n      \"U25vd3k=\"\n    ]\n  },\n  \"M_example\": {\n    \"M\": {\n      \"Name\": {\n        \"S\": \"Joe\"\n      },\n      \"Age\": {\n        \"N\": \"35\"\n      }\n    }\n  },\n  \"L_example\": {\n    \"L\": [\n      {\n        \"S\": \"Cookies\"\n      },\n      {\n        \"S\": \"Coffee\"\n      },\n      {\n        \"N\": \"3.14159\"\n      }\n    ]\n  },\n  \"NULL_example\": {\n    \"NULL\": true\n  },\n  \"BOOL_example\": {\n    \"BOOL\": true\n  }\n}",
+          "description": "Add additional attributes, in JSON format, other than the primary key attributes.",
+          "tooltip": "Add additional attributes, in JSON format, other than the primary key attributes. Refer to following default value for syntax of different data types",
           "type": "object",
           "name": "additionalAttributes",
           "required": false,
@@ -1616,7 +1616,7 @@
     {
       "title": "Delete Table Item",
       "operation": "delete_item",
-      "description": "Deleted an item in specified table",
+      "description": "Deletes an item in an AWS DynamoDB table based on the table name, partition key name, and other attributes you have specified.",
       "category": "utilities",
       "annotation": "delete_item",
       "enabled": true,
@@ -1670,8 +1670,8 @@
         },
         {
           "title": "Table Name",
-          "description": "The name of the table from which to delete the item.",
-          "tooltip": "The name of the table from which to delete the item.",
+          "description": "Specify the name of the table from which to delete an existing table item. ",
+          "tooltip": "Specify the name of the table from which to delete an existing table item.",
           "type": "text",
           "name": "TableName",
           "required": true,
@@ -1681,8 +1681,8 @@
         },
         {
           "title": "Partition Key Name",
-          "description": "A name of the partition key.",
-          "tooltip": "Provide a name for the partition key",
+          "description": "Specify the name of the partition key of the item to be deleted.",
+          "tooltip": "Specify the name of the partition key of the item to be deleted.",
           "type": "text",
           "name": "partitionKeyName",
           "required": true,
@@ -1692,8 +1692,8 @@
         },
         {
           "title": "Partition Key Data Type",
-          "description": "The data type for the partition key value",
-          "tooltip": "The data type for the partition key value",
+          "description": "Select a data type for the partition key from the following options:  \n\nString \n\nBinary \n\nNumber ",
+          "tooltip": "Select a data type for the partition key from the following options",
           "type": "select",
           "name": "partitionKeyDataType",
           "options": [
@@ -1708,8 +1708,8 @@
         },
         {
           "title": "Partition Key Value",
-          "description": "A value of the partition key.",
-          "tooltip": "Provide a value for the partition key",
+          "description": "Specify a value of the partition key of the item to delete.",
+          "tooltip": "Specify a value of the partition key of the item to delete.",
           "type": "text",
           "name": "partitionKeyValue",
           "required": true,
@@ -1719,7 +1719,7 @@
         },
         {
           "title": "Sort Key",
-          "description": "Provide a value for the sort key.",
+          "description": "Specify the sort key for this table.The sort key is the second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key. If you enable this option, then specify the following options:  \n\nSort Key Name: Specify a name for the sort key. \n\nSort Key Data Type: Select a data type for the sort key from the following options:  \n\nString \n\nBinary \n\nNumber \n\nSort Key Value: Specify the value of the sort key.",
           "tooltip": "For a composite primary key, you must provide values for both the partition key and the sort key.",
           "type": "checkbox",
           "name": "sortKey",
@@ -1731,8 +1731,8 @@
             "true": [
               {
                 "title": "Sort Key Name",
-                "description": "A name of the sort key.",
-                "tooltip": "A name of the sort key.",
+                "description": "Specify a name for the sort key.",
+                "tooltip": "Specify a name for the sort key.",
                 "type": "text",
                 "name": "sortKeyName",
                 "required": true,
@@ -1742,8 +1742,8 @@
               },
               {
                 "title": "Sort Key Data Type",
-                "description": "The data type for the sort key value",
-                "tooltip": "The data type for the sort key value",
+                "description": "Select a data type for the sort key from the following options:  \n\nString \n\nBinary \n\nNumber",
+                "tooltip": "Select a data type for the sort key from the following options",
                 "type": "select",
                 "name": "sortKeyDataType",
                 "options": [
@@ -1758,8 +1758,8 @@
               },
               {
                 "title": "Sort Key Value",
-                "description": "A value of the sort key.",
-                "tooltip": "A value of the sort key.",
+                "description": "Specify the value of the sort key.",
+                "tooltip": "Specify the value of the sort key.",
                 "type": "text",
                 "name": "sortKeyValue",
                 "required": true,
@@ -1833,7 +1833,7 @@
     {
       "title": "Search Table Item",
       "operation": "search_item",
-      "description": "Search items in the specified table.",
+      "description": "Searches an item in an AWS DynamoDB table based on the table name, partition key name, and other attributes you have specified.",
       "category": "utilities",
       "annotation": "search_table_item",
       "enabled": true,
@@ -1887,8 +1887,8 @@
         },
         {
           "title": "Table Name",
-          "description": "The name of the table containing the requested item.",
-          "tooltip": "Specify the table name containing the requested item.",
+          "description": "Specify the name of the table containing the requested item.",
+          "tooltip": "Specify the name of the table containing the requested item.",
           "type": "text",
           "name": "TableName",
           "required": true,
@@ -1898,8 +1898,8 @@
         },
         {
           "title": "Partition Key Name",
-          "description": "A name of the partition key.",
-          "tooltip": "Provide a name for the partition key",
+          "description": "Specify the name of the partition key of the requested item.",
+          "tooltip": "Specify the name of the partition key of the requested item.",
           "type": "text",
           "name": "partitionKeyName",
           "required": true,
@@ -1909,8 +1909,8 @@
         },
         {
           "title": "Partition Key Data Type",
-          "description": "The data type for the partition key value",
-          "tooltip": "The data type for the partition key value",
+          "description": "Select a data type for the partition key from the following options:  \n\nString \n\nBinary \n\nNumber",
+          "tooltip": "Select a data type for the partition key from the following options",
           "type": "select",
           "name": "partitionKeyDataType",
           "options": [
@@ -1925,8 +1925,8 @@
         },
         {
           "title": "Partition Key Value",
-          "description": "A value of the partition key.",
-          "tooltip": "Provide a value for the partition key",
+          "description": "Specify a value of the partition key of the requested item.",
+          "tooltip": "Specify a value of the partition key of the requested item.",
           "type": "text",
           "name": "partitionKeyValue",
           "required": true,
@@ -1936,8 +1936,8 @@
         },
         {
           "title": "Sort Key",
-          "description": "Provide a value for the sort key.",
-          "tooltip": "For a composite primary key, you must provide values for both the partition key and the sort key.",
+          "description": "Specify the sort key for this table.The sort key is the second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key. If you enable this option, then specify the following options:  \n\nSort Key Name: Specify a name for the sort key. \n\nSort Key Data Type: Select a data type for the sort key from the following options:  \n\nString \n\nBinary \n\nNumber \n\nSort Key Value: Specify the value of the sort key.",
+          "tooltip": "Specify the sort key for this table.The sort key is the second part of the table's primary key. The sort key allows you to sort or search among all items sharing the same partition key.",
           "type": "checkbox",
           "name": "sortKey",
           "required": false,
@@ -1948,8 +1948,8 @@
             "true": [
               {
                 "title": "Sort Key Name",
-                "description": "A name of the sort key.",
-                "tooltip": "A name of the sort key.",
+                "description": "Specify a name for the sort key.",
+                "tooltip": "Specify a name for the sort key.",
                 "type": "text",
                 "name": "sortKeyName",
                 "required": true,
@@ -1959,8 +1959,8 @@
               },
               {
                 "title": "Sort Key Data Type",
-                "description": "The data type for the sort key value",
-                "tooltip": "The data type for the sort key value",
+                "description": "Select a data type for the sort key from the following options:  \n\nString \n\nBinary \n\nNumber",
+                "tooltip": "Select a data type for the sort key from the following options",
                 "type": "select",
                 "name": "sortKeyDataType",
                 "options": [
@@ -1975,8 +1975,8 @@
               },
               {
                 "title": "Sort Key Value",
-                "description": "A value of the sort key.",
-                "tooltip": "A value of the sort key.",
+                "description": "Specify the value of the sort key.",
+                "tooltip": "Specify the value of the sort key.",
                 "type": "text",
                 "name": "sortKeyValue",
                 "required": true,
@@ -2050,7 +2050,7 @@
     {
       "title": "Get Table Items List",
       "operation": "list_table_items",
-      "description": "Search items in the specified table.",
+      "description": "Retrieves the items of a AWS DynamoDB table based on the table name and selected attributes you have specified.",
       "category": "utilities",
       "annotation": "list_table_items",
       "enabled": true,
@@ -2104,8 +2104,8 @@
         },
         {
           "title": "Table Name",
-          "description": "The name of the table containing the requested items.",
-          "tooltip": "Specify the table name containing the requested items.",
+          "description": "Specify the name of the table to fetch its table items.",
+          "tooltip": "Specify the name of the table to fetch its table items.",
           "type": "text",
           "name": "TableName",
           "required": true,
@@ -2115,8 +2115,8 @@
         },
         {
           "title": "Select Attributes",
-          "description": "The table attributes to be returned in the result.Choose option below:\n - ALL_ATTRIBUTES : The query returns table rows with all the columns\n - ALL_PROJECTED_ATTRIBUTES : The query returns table rows with all the columns mentioned in the global or secondary index of the table\n - SPECIFIC_ATTRIBUTES : The query returns table rows for specific attributes mentioned in Projection Expression",
-          "tooltip": "The table attributes(columns) to be returned in the result.",
+          "description": "Specify the table attributes (columns) to be returned in the result. Select from the following options:  \n\nALL_ATTRIBUTES: Select this option to get table items with all the columns. \n\nALL_PROJECTED_ATTRIBUTES: Select this option to get table items with all the columns mentioned in the secondary index of the table you specify (global or local).  \n\nIndex Name: Specify the name of the secondary index to scan for attributes. \n\nSPECIFIC_ATTRIBUTES: Select this option to get table items for the attributes specified in the following field:  \n\nProjection Expression: Specify a comma-separated list of columns for the table items.",
+          "tooltip": "Specify the table attributes (columns) to be returned in the result.",
           "type": "select",
           "name": "Select",
           "options": [
@@ -2159,8 +2159,8 @@
         },
         {
           "title": "Page Size",
-          "description": "The maximum number of items to be return in result",
-          "tooltip": "Provide a value for the page size",
+          "description": "Specify the maximum number of items to get in the resulting output.",
+          "tooltip": "Specify the maximum number of items to get in the resulting output.",
           "type": "integer",
           "name": "Limit",
           "required": false,
@@ -2174,7 +2174,7 @@
     {
       "title": "Create Global Table",
       "operation": "create_global_table",
-      "description": "Creates a global table for the existing table. This operation only applies to Version 2017.11.29 of global tables. Make sure that following conditions are satisfied by existing table before creating Global Table for the same.\n 1. A Table must be empty. \n 2. A Log stream with type 'New and Old Images' must be enabled for a table.",
+      "description": "Creates a global table from an existing table. This operation only applies to global table version 2017.11.29. Before creating a global table ensure that the existing table meets the following conditions:  \n\nThe table must be empty. \n\nA Log stream of type New and Old Images must be enabled for this table.",
       "category": "utilities",
       "annotation": "create_global_table",
       "enabled": true,
@@ -2228,8 +2228,8 @@
         },
         {
           "title": "Global Table Name",
-          "description": "Specify the global table name that to be created.",
-          "tooltip": "Specify the global table name that to be created. Make sure that Global Table name should be same as of the existing table.",
+          "description": "Specify a name of the global table to be created.",
+          "tooltip": "Specify a name of the global table to be created. Make sure that Global Table name should be same as of the existing table.",
           "type": "text",
           "name": "globalTableName",
           "required": true,
@@ -2239,8 +2239,8 @@
         },
         {
           "title": "Region Name",
-          "description": "Specify the region where the global table needs to be created.",
-          "tooltip": "Region where the global table needs to be created.",
+          "description": "Specify the region where the global table is to be created.",
+          "tooltip": "Specify the region where the global table is to be created.",
           "type": "text",
           "name": "regionName",
           "required": true,
@@ -2286,7 +2286,7 @@
     {
       "title": "Get Global Table Details",
       "operation": "get_global_table_details",
-      "description": "Retrieve the information about the specified global table.",
+      "description": "Retrieves information about the global table based on the table name you have specified.",
       "category": "utilities",
       "annotation": "get_global_table_details",
       "enabled": true,
@@ -2340,8 +2340,8 @@
         },
         {
           "title": "Global Table Name",
-          "description": "Specify the global table name whose information you want to fetch from AWS DynamoDB.",
-          "tooltip": "The name of the global table.",
+          "description": "Specify the name of the global table whose information you want to fetch from AWS DynamoDB.",
+          "tooltip": "Specify the name of the global table whose information you want to fetch from AWS DynamoDB.",
           "type": "text",
           "name": "globalTableName",
           "required": true,
@@ -2387,7 +2387,7 @@
     {
       "title": "Get Global Table List",
       "operation": "get_global_table_list",
-      "description": "Retrieves list of all the global tables that have a replica in the specified Region.",
+      "description": "Retrieves a list of all the global tables that have a replica in the specified region.",
       "category": "utilities",
       "annotation": "get_global_table_list",
       "enabled": true,
@@ -2457,7 +2457,7 @@
     {
       "title": "Create Table Backup",
       "operation": "create_backup",
-      "description": "Creates a backup for an existing table in AWS DynamoDB.",
+      "description": "Creates a backup of an existing table in AWS DynamoDB based on the table name and the backup table name you have specified.",
       "category": "utilities",
       "annotation": "create_backup",
       "enabled": true,
@@ -2511,8 +2511,8 @@
         },
         {
           "title": "Table Name",
-          "description": "Specify the table name whose backup you want to create in AWS DynamoDB.",
-          "tooltip": "The name of the table to be backup.",
+          "description": "Specify the name of the table whose backup you want to create in AWS DynamoDB.",
+          "tooltip": "Specify the name of the table whose backup you want to create in AWS DynamoDB.",
           "type": "text",
           "name": "TableName",
           "required": true,
@@ -2522,8 +2522,8 @@
         },
         {
           "title": "Backup Name",
-          "description": "Specify the backup name for table.",
-          "tooltip": "Specify the backup name for table.",
+          "description": "Specify a name for the backup table to be created.",
+          "tooltip": "Specify a name for the backup table to be created.",
           "type": "text",
           "name": "BackupName",
           "required": true,
@@ -2547,7 +2547,7 @@
     {
       "title": "Get Table Backup Details",
       "operation": "get_table_backup_details",
-      "description": "Retrieve the details of an existing backup of a table in AWS DynamoDB.",
+      "description": "Retrieves details of an existing backup of a table in AWS DynamoDB based on the backup Amazon Resource Name (ARN) you have specified. ",
       "category": "utilities",
       "annotation": "get_table_backup_details",
       "enabled": true,
@@ -2601,8 +2601,8 @@
         },
         {
           "title": "Backup ARN",
-          "description": "Specify the Amazon Resource Name (ARN) associated with the backup.",
-          "tooltip": "The Amazon Resource Name (ARN) associated with the backup.",
+          "description": "Specify the Amazon Resource Name (ARN) associated with the backup whose details are to be fetched.",
+          "tooltip": "Specify the Amazon Resource Name (ARN) associated with the backup whose details are to be fetched.",
           "type": "text",
           "name": "BackupArn",
           "required": true,
@@ -2697,7 +2697,7 @@
     {
       "title": "Get Table Backup List",
       "operation": "get_table_backup_list",
-      "description": "Retrieves list of backups from AWS DynamoDB.",
+      "description": "Retrieves a list of backups from AWS DynamoDB.",
       "category": "utilities",
       "annotation": "get_table_backup_list",
       "enabled": true,
@@ -2769,7 +2769,7 @@
     {
       "title": "Delete Table Backup",
       "operation": "delete_table_backup",
-      "description": "Deletes an existing backup of a table from AWS DynamoDB.",
+      "description": "Deletes an existing backup of a table from AWS DynamoDB based on the backup Amazon Resource Name (ARN) you have specified.",
       "category": "utilities",
       "annotation": "delete_table_backup",
       "enabled": true,
@@ -2823,8 +2823,8 @@
         },
         {
           "title": "Backup ARN",
-          "description": "Specify the Amazon Resource Name (ARN) associated with the backup.",
-          "tooltip": "The Amazon Resource Name (ARN) associated with the backup.",
+          "description": "Specify the Amazon Resource Name (ARN) associated with the backup to be deleted.",
+          "tooltip": "Specify the Amazon Resource Name (ARN) associated with the backup to be deleted.",
           "type": "text",
           "name": "BackupArn",
           "required": true,
