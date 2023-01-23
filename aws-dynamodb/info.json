@@ -6,7 +6,7 @@
   "publisher": "Fortinet",
   "cs_approved": true,
   "cs_compatible": true,
-  "category": "AWS Services",
+  "category": "Database",
   "icon_small_name": "cyops_small.png",
   "icon_large_name": "cyops_large.png",
   "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.0/aws-dynamodb/477/aws-dynamodb-v1-0-0",
